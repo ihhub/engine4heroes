@@ -135,7 +135,7 @@ std::vector<uint8_t> Compression::unzipGzip( const std::vector<uint8_t> & gzipSt
 
     int ret{ Z_OK };
 
-    constexpr size_t chunkSize{ 16 * 1024 };
+    constexpr size_t chunkSize{ 16U * 1024U };
 
     // To avoid populating a container while resizing (std::vector::resize() does it),
     // we dynamically allocate memory without any extra operations.

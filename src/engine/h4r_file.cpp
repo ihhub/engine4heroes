@@ -20,12 +20,12 @@
 
 #include "h4r_file.h"
 
-#include "tools.h"
-
 #include <array>
 #include <cassert>
 #include <cstddef>
 #include <utility>
+
+#include "tools.h"
 
 namespace
 {
