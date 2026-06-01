@@ -15,6 +15,9 @@ permissions:
   pull-requests: write
 
 jobs:
+  msvc:
+    name: MSVC
+    uses: ./.github/workflows/msvc.yml
   sonarcloud:
     name: SonarCloud Analyzer
     uses: ./.github/workflows/sonarcloud.yml

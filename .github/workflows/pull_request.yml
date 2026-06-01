@@ -68,6 +68,11 @@ jobs:
     uses: ./.github/workflows/iwyu.yml
     with:
       run: ${{ needs.dispatcher.outputs.runCxxAnalyzers == 'YES' }}
+  msvc:
+    name: MSVC
+    needs:
+    - style
+    uses: ./.github/workflows/msvc.yml
   sonarcloud:
     name: SonarCloud Analyzer
     needs:
@@ -78,3 +83,8 @@ jobs:
       run: ${{ needs.dispatcher.outputs.runSonarAnalyzer == 'YES' }}
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  cmake:
+    name: CMake
+    needs:
+    - msvc
+    uses: ./.github/workflows/cmake.yml

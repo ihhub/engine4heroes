@@ -1,0 +1,100 @@
+name: MSVC
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  msvc:
+    strategy:
+      matrix:
+        include:
+        - name: SDL2 x86
+          platform: x86
+          build_config: Release-SDL2
+          deploy_config: SDL2
+          tools_package_name: engine4heroes_tools_windows_x86_SDL2.zip
+          release_name: Windows x86 build with SDL2 (latest commit)
+          release_tag: engine4heroes-windows-x86-SDL2
+        - name: SDL2 x64
+          platform: x64
+          build_config: Release-SDL2
+          deploy_config: SDL2
+          tools_package_name: engine4heroes_tools_windows_x64_SDL2.zip
+          release_name: Windows x64 build with SDL2 (latest commit)
+          release_tag: engine4heroes-windows-x64-SDL2
+    name: MSVC (${{ matrix.name }})
+    runs-on: windows-2022
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v6
+    - name: Install dependencies
+      run: |
+        script/windows/install_packages.bat
+    - name: Install MSYS2 tools
+      run: |
+        C:\msys64\usr\bin\pacman.exe -S --noconfirm --noprogressbar gettext-devel make
+      shell: cmd
+    - name: Download MSVC Redistributable package
+      run: |
+        mkdir .vcredist && ^
+        C:\msys64\usr\bin\wget.exe -O .vcredist/vcredist.exe "%VCREDIST_URL%"
+      shell: cmd
+      env:
+        # Permalink URL from https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+        VCREDIST_URL: https://aka.ms/vs/17/release/vc_redist.${{ matrix.platform }}.exe
+    - name: Verify MSVC Redistributable package
+      run: |
+        "%SIGNTOOL_DIR%\signtool.exe" verify /v /d /all /pa /r "Microsoft Root Certificate Authority" .vcredist\vcredist.exe
+      shell: cmd
+      env:
+        SIGNTOOL_DIR: C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64
+    - name: Generate version information
+      run: |
+        echo "ENGINE4HEROES_APP_VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
+    - uses: microsoft/setup-msbuild@v3
+    - name: Build tools
+      run: |
+        cd src/tools
+        MSBuild.exe extractor-vs2019.vcxproj /property:Platform=${{ matrix.platform }} /property:Configuration=${{ matrix.build_config }}
+        MSBuild.exe h4d-unpack-vs2019.vcxproj /property:Platform=${{ matrix.platform }} /property:Configuration=${{ matrix.build_config }}
+    - name: Create ZIP packages
+      run: |
+        7z.exe a -bb1 -tzip -- "$BUILD_DIR"\\${{ matrix.tools_package_name }} \
+                               .\\"$BUILD_DIR"\\extractor.exe \
+                               .\\"$BUILD_DIR"\\h4d-unpack.exe \
+                               .\\"$BUILD_DIR"\\zlib1.dll \
+                               LICENSE
+        if [[ ${{ matrix.deploy_config }} == SDL2 ]]; then
+            7z.exe a -bb1 -tzip -- "$BUILD_DIR"\\${{ matrix.tools_package_name }} \
+                                   .\\"$BUILD_DIR"\\SDL2.dll \
+                                   .\\"$BUILD_DIR"\\SDL2_image.dll
+        else
+            false
+        fi
+      env:
+        BUILD_DIR: build\${{ matrix.platform }}\${{ matrix.build_config }}
+    - uses: actions/upload-artifact@v7
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
+        name: ${{ matrix.tools_package_name }}
+        path: build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.tools_package_name }}
+        archive: false
+        if-no-files-found: error
+    - uses: ncipollo/release-action@v1
+      if: ${{ github.event_name == 'push' }}
+      with:
+        artifacts: build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.tools_package_name }}
+        body: ${{ github.event.head_commit.message }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: ${{ matrix.release_name }}
+        tag: ${{ matrix.release_tag }}
+        allowUpdates: true
+        artifactErrorsFailBuild: true
+        prerelease: true
+        replacesArtifacts: true
