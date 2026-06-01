@@ -27,9 +27,9 @@ jobs:
     - name: Check copyright headers
       run: |
         bash script/tools/check_copyright_headers.sh
-    - name: Check LegalCopyright date in fheroes2.rc
+    - name: Check LegalCopyright date in Visual Studio resource file
       run: |
-        (grep "VALUE \"LegalCopyright\", *\"\\\\251 $(date +%Y) fheroes2 Resurrection team" src/resources/fheroes2.rc > /dev/null && \
+        (grep "VALUE \"LegalCopyright\", *\"\\\\251 $(date +%Y) engine4heroes team" src/resources/engine4heroes.rc > /dev/null && \
          echo "The date specified in the LegalCopyright entry is valid.") || \
         (echo "Please update the date in the LegalCopyright entry!" && false)
     - name: Check format of markdown files
