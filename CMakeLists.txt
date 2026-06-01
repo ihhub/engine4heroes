@@ -69,17 +69,3 @@ endif(ENABLE_IMAGE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_subdirectory(src)
-
-#
-# Translation files
-#
-if(NOT WIN32)
-	find_program(MAKE_EXECUTABLE make)
-
-	add_custom_target(
-		translations
-		ALL
-		COMMAND ${MAKE_EXECUTABLE}
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/files/lang
-		)
-endif(NOT WIN32)
