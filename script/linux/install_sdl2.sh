@@ -1,6 +1,9 @@
 #!/bin/bash
 
 ###########################################################################
+#   engine4heroes: https://github.com/ihhub/engine4heroes                 #
+#   Copyright (C) 2026                                                    #
+#                                                                         #
 #   fheroes2: https://github.com/ihhub/fheroes2                           #
 #   Copyright (C) 2021 - 2023                                             #
 #                                                                         #
