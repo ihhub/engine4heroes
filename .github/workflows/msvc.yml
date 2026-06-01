@@ -15,16 +15,16 @@ jobs:
           platform: x86
           build_config: Release-SDL2
           deploy_config: SDL2
-          tools_package_name: fheroes2_tools_windows_x86_SDL2.zip
+          tools_package_name: engine4heroes_tools_windows_x86_SDL2.zip
           release_name: Windows x86 build with SDL2 (latest commit)
-          release_tag: fheroes2-windows-x86-SDL2
+          release_tag: engine4heroes-windows-x86-SDL2
         - name: SDL2 x64
           platform: x64
           build_config: Release-SDL2
           deploy_config: SDL2
-          tools_package_name: fheroes2_tools_windows_x64_SDL2.zip
+          tools_package_name: engine4heroes_tools_windows_x64_SDL2.zip
           release_name: Windows x64 build with SDL2 (latest commit)
-          release_tag: fheroes2-windows-x64-SDL2
+          release_tag: engine4heroes-windows-x64-SDL2
     name: MSVC (${{ matrix.name }})
     runs-on: windows-2022
     timeout-minutes: 30
@@ -56,7 +56,7 @@ jobs:
         SIGNTOOL_DIR: C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64
     - name: Generate version information
       run: |
-        echo "FHEROES2_APP_VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
+        echo "ENGINE4HEROES_APP_VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
     - uses: microsoft/setup-msbuild@v3
     - name: Build tools
       run: |
