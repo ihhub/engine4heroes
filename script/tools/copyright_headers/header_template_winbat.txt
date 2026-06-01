@@ -1,0 +1,4 @@
+:: ###########################################################################
+:: #   engine4heroes: https://github.com/ihhub/engine4heroes                 #
+:: #   Copyright (C) {Y1} - {Y2}                                             #
+:: #                                                                         #
