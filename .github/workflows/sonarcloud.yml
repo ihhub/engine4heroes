@@ -21,7 +21,7 @@ jobs:
     if: >-
       ${{
           inputs.run
-          && github.repository == 'ihhub/fheroes2'
+          && github.repository == 'ihhub/engine4heroes'
           && ( github.event_name == 'push' || ( github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository ) )
           && github.actor != 'dependabot[bot]'
        }}
