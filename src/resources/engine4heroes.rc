@@ -1,0 +1,65 @@
+/***************************************************************************
+ *   engine4heroes: https://github.com/ihhub/engine4heroes                 *
+ *   Copyright (C) 2026                                                    *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#include <windows.h>
+#include "version.h"
+
+#define STRINGIFY(DEF)   #DEF
+#define EXPANDDEF(DEF)   STRINGIFY(DEF)
+#define E4H_VERSION_STR  EXPANDDEF(MAJOR_VERSION) "," EXPANDDEF(MINOR_VERSION) "," EXPANDDEF(INTERMEDIATE_VERSION) "," EXPANDDEF(BUILD_VERSION) "\0"
+
+#ifdef WITH_DEBUG
+#define E4H_DEBUG VS_FF_DEBUG
+#else
+#define E4H_DEBUG 0
+#endif
+
+SHELLICON ICON "engine4heroes.ico"
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION    MAJOR_VERSION, MINOR_VERSION, INTERMEDIATE_VERSION, BUILD_VERSION
+PRODUCTVERSION MAJOR_VERSION, MINOR_VERSION, INTERMEDIATE_VERSION, BUILD_VERSION
+FILEFLAGSMASK  VS_FF_DEBUG
+FILEFLAGS      E4H_DEBUG
+FILEOS         VOS_NT
+FILETYPE       VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "Comments",         "Visit us at https://ihhub.github.io/engine4heroes\0"
+            VALUE "CompanyName",      "engine4heroes team\0"
+            VALUE "FileDescription",  "Free implementation of the Heroes of Might and Magic IV game engine\0"
+            VALUE "FileVersion",      E4H_VERSION_STR
+            VALUE "InternalName",     "engine4heroes\0"
+            VALUE "LegalCopyright",   "\251 2026 engine4heroes team <fhomm2@gmail.com>. All rights for the original HoMM IV game belong to Ubisoft\0"
+            VALUE "OriginalFilename", "engine4heroes.exe\0"
+            VALUE "ProductName",      "engine4heroes engine\0"
+            VALUE "ProductVersion",   E4H_VERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 65001
+    END
+END
