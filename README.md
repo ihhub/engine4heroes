@@ -2,6 +2,17 @@
 
 **engine4heroes** is a recreation of the Heroes of Might and Magic IV game engine.
 
+## Copyright
+
+All rights for the original game and its resources belong to former The 3DO Company. These rights were transferred to Ubisoft.
+We do not encourage and do not support any form of illegal usage of the original game. We strongly advise to purchase the original
+game on [**GOG**](https://www.gog.com) or [**Ubisoft Store**](https://store.ubi.com) platforms. Alternatively, you can download a
+free demo version of the game. Please refer to the [**installation guide**](docs/INSTALL.md) for more information.
+
+## License
+
+This project is licensed under the [**GNU General Public License v3.0**](https://github.com/ihhub/engine4heroes/blob/master/LICENSE).
+
 ## Contribution and Development
 
 This repository is a place for everyone.
