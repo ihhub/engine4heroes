@@ -18,10 +18,17 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include <cstdint>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <functional>
+#include <map>
 #include <iostream>
 #include <string>
+#include <system_error>
+#include <utility>
+#include <vector>
 
 #include "h4r_file.h"
 

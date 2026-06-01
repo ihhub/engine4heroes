@@ -26,18 +26,10 @@
 
 #include "zzlib.h"
 
-#include <cstring>
-#include <ostream>
+#include <memory>
 
 #include <zconf.h>
 #include <zlib.h>
-
-#include "serialize.h"
-
-namespace
-{
-    constexpr uint16_t FORMAT_VERSION_0 = 0;
-}
 
 std::vector<uint8_t> Compression::unzipData( const uint8_t * src, const size_t srcSize, size_t realSize /* = 0 */ )
 {

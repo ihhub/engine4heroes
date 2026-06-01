@@ -30,10 +30,6 @@
 #include <cstdint>
 #include <vector>
 
-class IStreamBase;
-class OStreamBase;
-class IStreamBuf;
-
 namespace Compression
 {
     // Unzips the input data and returns the uncompressed data or an empty vector in case of an error.

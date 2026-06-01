@@ -22,6 +22,11 @@
 
 #include "tools.h"
 
+#include <array>
+#include <cassert>
+#include <cstddef>
+#include <utility>
+
 namespace
 {
     const std::array<uint8_t, 4> magicWord{ 'H', '4', 'R', 0x05 };
