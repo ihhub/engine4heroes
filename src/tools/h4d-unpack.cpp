@@ -1,6 +1,6 @@
 /***************************************************************************
  *   engine4heroes: https://github.com/ihhub/engine4heroes                 *
- *   Copyright (C) 2025                                                    *
+ *   Copyright (C) 2026                                                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
