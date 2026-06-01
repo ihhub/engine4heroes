@@ -28,8 +28,7 @@
 int main( int argc, char ** argv )
 {
     if ( argc < 3 ) {
-        std::cerr << argv[0] << " extracts the contents of the specified H4R file." << std::endl
-                  << "Syntax: " << argv[0] << " input_file.h4r dst_dir" << std::endl;
+        std::cerr << argv[0] << " extracts the contents of the specified H4R file." << std::endl << "Syntax: " << argv[0] << " input_file.h4r dst_dir" << std::endl;
         return EXIT_FAILURE;
     }
 
@@ -76,7 +75,6 @@ int main( int argc, char ** argv )
             }
 
             {
-
                 outputStream.write( reinterpret_cast<const char *>( buf.data() ), buf.size() );
             }
 

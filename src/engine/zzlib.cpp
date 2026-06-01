@@ -133,7 +133,7 @@ std::vector<uint8_t> Compression::unzipGzip( const std::vector<uint8_t> & gzipSt
     }
 
     z_stream zStream{};
-    zStream.next_in = const_cast<Bytef*>( gzipStream.data() );
+    zStream.next_in = const_cast<Bytef *>( gzipStream.data() );
     zStream.avail_in = static_cast<uInt>( gzipStream.size() );
 
     // 15 + 16 means "windowBits = 15" with gzip decoding enabled (16)
