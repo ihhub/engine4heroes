@@ -51,7 +51,7 @@ BEGIN
             VALUE "FileDescription",  "Free implementation of the Heroes of Might and Magic IV game engine\0"
             VALUE "FileVersion",      E4H_VERSION_STR
             VALUE "InternalName",     "engine4heroes\0"
-            VALUE "LegalCopyright",   "\251 2026 engine4heroes team <fhomm2@gmail.com>. All rights for the original HoMM IV game belong to Ubisoft\0"
+            VALUE "LegalCopyright",   "\251 2026 engine4heroes team <engine4heroes@gmail.com>. All rights for the original HoMM IV game belong to Ubisoft\0"
             VALUE "OriginalFilename", "engine4heroes.exe\0"
             VALUE "ProductName",      "engine4heroes engine\0"
             VALUE "ProductVersion",   E4H_VERSION_STR
