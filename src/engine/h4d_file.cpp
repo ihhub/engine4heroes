@@ -79,6 +79,7 @@ namespace
     bool processActorSequence( const std::string & entryName, ROStreamBuf & stream, std::vector<engine4heroes::Sprite> images )
     {
         const int16_t fileType = stream.getLE16();
+        (void)fileType;
         const int16_t fileFormat = stream.getLE16();
 
         std::vector<uint8_t> info;
@@ -171,11 +172,17 @@ namespace
 
             // TODO: identify what exactly all these values for MP3.
             const uint16_t chunkSize = stream.getLE16();
+            (void)chunkSize;
             const uint8_t channelCount = stream.get();
+            (void)channelCount;
             const uint32_t sampleRateInHz = stream.getLE32();
+            (void)sampleRateInHz;
             const uint32_t dataLengthBytes = stream.getLE32();
+            (void)dataLengthBytes;
             const uint16_t blockAlign = stream.getLE16();
+            (void)blockAlign;
             const uint32_t totalFileSize = stream.getLE32();
+            (void)totalFileSize;
 
             sound = stream.getRaw( 0 );
         }
@@ -184,9 +191,11 @@ namespace
             assert( soundType == 0 );
 
             const uint16_t chunkSize = stream.getLE16();
+            (void)chunkSize;
             const uint8_t channelCount = stream.get();
             const uint32_t sampleRateInHz = stream.getLE32();
             const uint32_t dataLengthBytes = stream.getLE32();
+            (void)dataLengthBytes;
             const uint16_t blockAlign = stream.getLE16();
 
             RWStreamBuf wavHeader( 44 );
@@ -267,11 +276,14 @@ namespace
 
         // As simple as it states: this is a font size (height). Not very useful as we know font size from a name.
         const uint8_t fontSize = stream.get();
+        (void)fontSize;
         // Maximum allowed character height.
         const uint8_t fontHeight = stream.get();
+        (void)fontHeight;
 
         // Maximum allowed character width.
         const uint8_t fontWidth = stream.get();
+        (void)fontWidth;
 
         // The number of characters present in the font.
         const uint8_t characterCount = stream.get();
