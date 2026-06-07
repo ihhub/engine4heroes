@@ -39,6 +39,10 @@ namespace File
 {
     bool H4RFile::open( const std::string & fileName )
     {
+        if ( fileName.empty() ) {
+            return false;
+        }
+
         if ( !_stream.open( fileName, "rb" ) ) {
             return false;
         }
