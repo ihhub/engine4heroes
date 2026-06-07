@@ -133,11 +133,6 @@ std::string Configuration::getLastFoundFile( const std::string & prefix, const s
     return files.empty() ? name : files.back();
 }
 
-bool Configuration::save() const
-{
-    return save( configFileName );
-}
-
 bool Configuration::save( const std::string_view fileName ) const
 {
     if ( fileName.empty() ) {

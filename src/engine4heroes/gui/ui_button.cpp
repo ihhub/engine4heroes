@@ -26,8 +26,8 @@
 #include <algorithm>
 #include <cassert>
 
-#include "math_tools.h"
 #include "image.h"
+#include "math_tools.h"
 #include "resource_manager.h"
 
 namespace engine4heroes
@@ -111,7 +111,7 @@ namespace engine4heroes
         , _pressedIndex( pressedIndex )
     {
         // const auto & releasedButton = _getReleased();
-        // 
+        //
         // setPosition( releasedButton.x(), releasedButton.y() );
 
         _updateButtonAreas();

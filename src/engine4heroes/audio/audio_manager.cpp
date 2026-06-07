@@ -334,7 +334,7 @@ namespace
     void PlayMusicImpl( const int trackId, const Music::PlaybackMode playbackMode )
     {
         // Make sure that the music track is valid.
-        assert( trackId > Music::UNKNOWN && trackId < Music::COUNT);
+        assert( trackId > Music::UNKNOWN && trackId < Music::COUNT );
 
         const std::scoped_lock<std::recursive_mutex> lock( g_asyncSoundManager.resourceMutex() );
 

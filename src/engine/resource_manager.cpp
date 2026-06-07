@@ -22,16 +22,15 @@
 
 #include "resource_manager.h"
 
+#include <map>
+#include <vector>
+
 #include "configuration.h"
 #include "dir.h"
 #include "h4d_file.h"
 #include "h4r_file.h"
 #include "tools.h"
-
 #include "zzlib.h"
-
-#include <map>
-#include <vector>
 
 namespace
 {

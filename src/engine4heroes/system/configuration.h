@@ -23,10 +23,10 @@
 
 #pragma once
 
-#include "dir.h"
-
 #include <string>
 #include <vector>
+
+#include "dir.h"
 
 class Configuration
 {
@@ -43,10 +43,18 @@ public:
 
     static std::string getLastFoundFile( const std::string & prefix, const std::string & name );
 
-    bool save() const;
+    bool save() const
+    {
+        return save( configFileName );
+    }
+
     bool save( const std::string_view fileName ) const;
 
-    bool load();
+    bool load()
+    {
+        return load( configFileName );
+    }
+
     bool load( const std::string_view fileName );
 
     void setProgramPath( const char * path )
@@ -135,7 +143,7 @@ private:
     bool _isSystemInfoEnabled{ false };
     bool _isSoftwareCursorEnabled{ false };
     bool _isScreenScalingNearest{ false };
-    
+
     Configuration() = default;
     ~Configuration() = default;
 

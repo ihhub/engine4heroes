@@ -230,7 +230,6 @@ namespace engine4heroes
         _height = 0;
     }
 
-
     void Image::resize( const int32_t width_, const int32_t height_ )
     {
         if ( width_ == _width && height_ == _height ) {

@@ -200,7 +200,6 @@ namespace engine4heroes
         bool _isSingleLineTextCenterAligned{ false };
     };
 
-
     // Renderer of current time and FPS on screen
     class SystemInfoRenderer
     {

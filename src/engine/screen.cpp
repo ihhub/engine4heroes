@@ -60,11 +60,10 @@
 
 #include "logging.h"
 #include "math_tools.h"
-#include "screen.h"
-#include "system.h"
-
 #include "rand.h"
 #include "serialize.h"
+#include "screen.h"
+#include "system.h"
 
 namespace
 {
@@ -139,7 +138,7 @@ namespace
             // Some operating systems do not work well with SDL so they return very limited number of high resolutions.
             // Populate missing resolutions into the list.
             const std::set<engine4heroes::ResolutionInfo> possibleResolutions
-                = { { 800, 600 },  { 1024, 768 },  { 1152, 864 }, { 1280, 600 }, { 1280, 720 },  { 1280, 768 }, { 1280, 960 },
+                = { { 800, 600 },   { 1024, 768 }, { 1152, 864 },  { 1280, 600 }, { 1280, 720 }, { 1280, 768 },  { 1280, 960 },
                     { 1280, 1024 }, { 1360, 768 }, { 1400, 1050 }, { 1440, 900 }, { 1600, 900 }, { 1680, 1050 }, { 1920, 1080 } };
 
             assert( !resolutions.empty() );
@@ -177,7 +176,8 @@ namespace
         for ( const engine4heroes::ResolutionInfo & resolution : resolutions ) {
             assert( resolution.gameWidth == resolution.screenWidth && resolution.gameHeight == resolution.screenHeight );
 
-            const int32_t maxScale = std::min( resolution.gameWidth / engine4heroes::Display::DEFAULT_WIDTH, resolution.gameHeight / engine4heroes::Display::DEFAULT_HEIGHT );
+            const int32_t maxScale
+                = std::min( resolution.gameWidth / engine4heroes::Display::DEFAULT_WIDTH, resolution.gameHeight / engine4heroes::Display::DEFAULT_HEIGHT );
 
             for ( int32_t scale = 2; scale <= maxScale; ++scale ) {
                 if ( resolution.gameWidth % scale != 0 || resolution.gameHeight % scale != 0 ) {
@@ -1050,6 +1050,7 @@ namespace engine4heroes
         : _engine( RenderEngine::create() )
         , _cursor( RenderCursor::create() )
     {
+        // Do nothing.
     }
 
     void Display::resize( int32_t width_, int32_t height_ )
@@ -1124,26 +1125,26 @@ namespace engine4heroes
         if ( _cursor->isVisible() && _cursor->isSoftwareEmulation() && !_cursor->_image.empty() ) {
             const Sprite & cursorImage = _cursor->_image;
             Rect cursorROI( cursorImage.x(), cursorImage.y(), cursorImage.width(), cursorImage.height() );
-            
+
             if ( _cursor->_keepInScreenArea ) {
                 cursorROI.x = std::clamp( cursorROI.x, 0, width() - cursorROI.width );
                 cursorROI.y = std::clamp( cursorROI.y, 0, height() - cursorROI.height );
             }
-            
+
             const Sprite backup = Crop( *this, cursorROI.x, cursorROI.y, cursorROI.width, cursorROI.height );
             Blit( cursorImage, 0, 0, *this, cursorROI.x, cursorROI.y, cursorROI.width, cursorROI.height );
-            
+
             // ROI must include cursor's area as well, otherwise cursor won't be rendered.
             if ( !backup.empty() && getActiveArea( cursorROI, width(), height() ) ) {
                 temp = getBoundaryRect( temp, cursorROI );
             }
-            
+
             _renderFrame( temp );
-            
+
             if ( _postprocessing ) {
                 _postprocessing();
             }
-            
+
             Copy( backup, 0, 0, *this, backup.x(), backup.y(), backup.width(), backup.height() );
         }
         else {

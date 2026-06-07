@@ -75,13 +75,11 @@
 #include "math_base.h"
 #include "rand.h"
 #include "render_processor.h"
+#include "resource_manager.h"
 #include "screen.h"
 #include "system.h"
 #include "timing.h"
 #include "ui_tool.h"
-
-#include "resource_manager.h"
-#include "game_hotkeys.h"
 
 namespace
 {
@@ -120,7 +118,8 @@ namespace
             // TODO: load resolution from the configuration.
 
             auto & display = engine4heroes::Display::instance();
-            engine4heroes::ResolutionInfo bestResolution{ engine4heroes::Display::DEFAULT_WIDTH, engine4heroes::Display::DEFAULT_HEIGHT }; // conf.currentResolutionInfo() };
+            engine4heroes::ResolutionInfo bestResolution{ engine4heroes::Display::DEFAULT_WIDTH,
+                                                          engine4heroes::Display::DEFAULT_HEIGHT }; // conf.currentResolutionInfo() };
 
             // display.setWindowPos( conf.getSavedWindowPos() );
             display.setResolution( bestResolution );
@@ -135,12 +134,11 @@ namespace
 
             auto & renderProcessor = engine4heroes::RenderProcessor::instance();
 
-            display.subscribe( [&renderProcessor]() { return renderProcessor.preRenderAction(); },
-                               [&renderProcessor]() { renderProcessor.postRenderAction(); } );
+            display.subscribe( [&renderProcessor]() { return renderProcessor.preRenderAction(); }, [&renderProcessor]() { renderProcessor.postRenderAction(); } );
 
             // Initialize system info renderer.
             _systemInfoRenderer = std::make_unique<engine4heroes::SystemInfoRenderer>();
-            
+
             renderProcessor.registerRenderers( [sysInfoRenderer = _systemInfoRenderer.get()]() { sysInfoRenderer->preRender(); },
                                                [sysInfoRenderer = _systemInfoRenderer.get()]() { sysInfoRenderer->postRender(); } );
 
@@ -149,11 +147,11 @@ namespace
             // Update mouse cursor when switching between software emulation and OS mouse modes.
             engine4heroes::cursor().registerUpdater( Cursor::Refresh );
 
-// TODO: fix this.
-// #if !defined( MACOS_APP_BUNDLE )
-//             const engine4heroes::Image & appIcon = Compression::CreateImageFromZlib( 32, 32, iconImage, sizeof( iconImage ), true );
-//             engine4heroes::engine().setIcon( appIcon );
-// #endif
+            // TODO: fix this.
+            // #if !defined( MACOS_APP_BUNDLE )
+            //             const engine4heroes::Image & appIcon = Compression::CreateImageFromZlib( 32, 32, iconImage, sizeof( iconImage ), true );
+            //             engine4heroes::engine().setIcon( appIcon );
+            // #endif
         }
 
         DisplayInitializer( const DisplayInitializer & ) = delete;

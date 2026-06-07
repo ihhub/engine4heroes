@@ -18,6 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include "image_tool.h"
+
 #include <algorithm>
 #include <cassert>
 #include <cstdint>
@@ -27,16 +29,14 @@
 #include <string_view>
 #include <vector>
 
-#include "image_tool.h"
-
-#include "image.h"
-#include "serialize.h"
-
 #include <SDL_error.h>
 #include <SDL_pixels.h>
 #include <SDL_stdinc.h>
 #include <SDL_surface.h>
 #include <SDL_version.h>
+
+#include "image.h"
+#include "serialize.h"
 
 namespace
 {
@@ -56,7 +56,7 @@ namespace engine4heroes
             return false;
         }
 
-         // Extract palette information.
+        // Extract palette information.
         const uint32_t paletteSize = stream.getLE16();
 
         // As of current knowledge the size of palette is expected to be no more than 256.
@@ -258,7 +258,8 @@ namespace engine4heroes
         }
 
         const std::unique_ptr<SDL_Surface, void ( * )( SDL_Surface * )> surface( SDL_CreateRGBSurface( 0, image.width(), image.height(), 32, 0xFF, 0xFF00, 0xFF0000,
-                0xFF000000 ), SDL_FreeSurface );
+                                                                                                       0xFF000000 ),
+                                                                                 SDL_FreeSurface );
         if ( !surface ) {
             return false;
         }

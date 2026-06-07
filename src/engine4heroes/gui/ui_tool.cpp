@@ -281,11 +281,13 @@ namespace engine4heroes
                  const engine4heroes::Key keyValue = le.getPressedKeyValue();
 
                  if ( keyValue >= engine4heroes::Key::KEY_0 && keyValue <= engine4heroes::Key::KEY_9 ) {
-                     return engine4heroes::checkedCast<char>( static_cast<KeyUnderlyingType>( keyValue ) - static_cast<KeyUnderlyingType>( engine4heroes::Key::KEY_0 ) + '0' );
+                     return engine4heroes::checkedCast<char>( static_cast<KeyUnderlyingType>( keyValue ) - static_cast<KeyUnderlyingType>( engine4heroes::Key::KEY_0 )
+                                                              + '0' );
                  }
 
                  if ( keyValue >= engine4heroes::Key::KEY_KP_0 && keyValue <= engine4heroes::Key::KEY_KP_9 ) {
-                     return engine4heroes::checkedCast<char>( static_cast<KeyUnderlyingType>( keyValue ) - static_cast<KeyUnderlyingType>( engine4heroes::Key::KEY_KP_0 ) + '0' );
+                     return engine4heroes::checkedCast<char>( static_cast<KeyUnderlyingType>( keyValue ) - static_cast<KeyUnderlyingType>( engine4heroes::Key::KEY_KP_0 )
+                                                              + '0' );
                  }
 
                  return {};

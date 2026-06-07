@@ -243,8 +243,8 @@ namespace
         return size;
     }
 
-    int32_t renderSingleLine( const uint8_t * data, const int32_t size, const int32_t x, const int32_t y, engine4heroes::Image & output, const engine4heroes::Rect & imageRoi,
-                              const engine4heroes::FontCharHandler & charHandler )
+    int32_t renderSingleLine( const uint8_t * data, const int32_t size, const int32_t x, const int32_t y, engine4heroes::Image & output,
+                              const engine4heroes::Rect & imageRoi, const engine4heroes::FontCharHandler & charHandler )
     {
         assert( data != nullptr && size > 0 && !output.empty() );
 
@@ -275,7 +275,7 @@ namespace
             const engine4heroes::Rect overlappedRoi = imageRoi ^ charRoi;
 
             engine4heroes::Blit( charSprite, overlappedRoi.x - charRoi.x, overlappedRoi.y - charRoi.y, output, overlappedRoi.x, overlappedRoi.y, overlappedRoi.width,
-                            overlappedRoi.height );
+                                 overlappedRoi.height );
             offsetX += charSprite.width() + charSprite.x();
         }
 

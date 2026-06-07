@@ -20,10 +20,10 @@
 
 #include "game_mainmenu_ui.h"
 
+#include <cassert>
+
 #include "resource_manager.h"
 #include "screen.h"
-
-#include <cassert>
 
 namespace engine4heroes
 {

@@ -20,12 +20,11 @@
 
 #include "h4d_file.h"
 
-#include "image_tool.h"
-#include "serialize.h"
-
+#include <iostream>
 #include <string_view>
 
-#include <iostream>
+#include "image_tool.h"
+#include "serialize.h"
 
 namespace
 {

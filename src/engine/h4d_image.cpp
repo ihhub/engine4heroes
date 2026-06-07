@@ -22,7 +22,7 @@
 
 namespace engine4heroes
 {
-	PackedImage::PackedImage( PackedImage && image ) noexcept
+    PackedImage::PackedImage( PackedImage && image ) noexcept
         : _data( std::move( image._data ) )
     {
         std::swap( _width, image._width );

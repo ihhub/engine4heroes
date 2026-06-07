@@ -30,20 +30,18 @@
 #include <utility>
 #include <vector>
 
-#include "cursor.h"
-#include "game_mainmenu_ui.h"
-#include "localevent.h"
-#include "screen.h"
-#include "ui_button.h"
-#include "ui_text.h"
-
 #include "audio.h"
 #include "audio_manager.h"
-#include "music_info.h"
-#include "sound_info.h"
-
-#include "resource_manager.h"
+#include "cursor.h"
+#include "game_mainmenu_ui.h"
 #include "image.h"
+#include "localevent.h"
+#include "music_info.h"
+#include "resource_manager.h"
+#include "screen.h"
+#include "sound_info.h"
+#include "ui_button.h"
+#include "ui_text.h"
 
 namespace
 {
