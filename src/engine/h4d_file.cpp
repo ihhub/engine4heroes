@@ -41,7 +41,7 @@ namespace
         return path.size() >= prefix.size() && memcmp( path.data(), prefix.data(), prefix.size() ) == 0;
     }
 
-    const std::array<uint8_t, 2> actorSequenceMagicSequence{ 0x02, 0x00 };
+    // const std::array<uint8_t, 2> actorSequenceMagicSequence{ 0x02, 0x00 };
 
     bool processImage( const std::string & entryName, ROStreamBuf & stream, engine4heroes::Sprite & output )
     {
