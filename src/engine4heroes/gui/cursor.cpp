@@ -26,11 +26,11 @@
 
 #include "cursor.h"
 
+#include <array>
+
 #include "image.h"
 #include "localevent.h"
 #include "resource_manager.h"
-
-#include <array>
 
 namespace
 {
