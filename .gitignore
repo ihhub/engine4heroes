@@ -84,3 +84,10 @@ ios/SDL2_mixer/
 
 # Mac magic folders
 .DS_Store
+
+# HoMM4 game resource files
+*.aop
+*.dat
+*.h4r
+*.pbg
+*.asi
