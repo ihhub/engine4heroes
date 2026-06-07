@@ -32,8 +32,6 @@
 #include <utility>
 #include <vector>
 
-struct ListFiles;
-
 namespace Audio
 {
     // Audio initialization and deinitialization functions are not designed to be called

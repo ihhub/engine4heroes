@@ -30,7 +30,6 @@
 #include <atomic>
 #include <cassert>
 #include <cmath>
-#include <list>
 #include <map>
 #include <memory>
 #include <mutex>
@@ -59,7 +58,6 @@
 #endif
 
 #include "core.h"
-#include "dir.h"
 #include "logging.h"
 #include "system.h"
 #include "thread.h"

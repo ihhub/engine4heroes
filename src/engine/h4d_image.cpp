@@ -20,6 +20,8 @@
 
 #include "h4d_image.h"
 
+#include <cstring>
+
 namespace engine4heroes
 {
     PackedImage::PackedImage( PackedImage && image ) noexcept

@@ -23,29 +23,12 @@
 
 #include "image.h"
 
-#include <algorithm>
 #include <cassert>
-#include <cmath>
 #include <cstddef>
-#include <cstdlib>
 #include <cstring>
 
 namespace
 {
-    bool Validate( const engine4heroes::Image & image, const int32_t x, const int32_t y, const int32_t width, const int32_t height )
-    {
-        if ( image.empty() || width <= 0 || height <= 0 ) {
-            // What's the reason to work with empty images?
-            return false;
-        }
-
-        if ( x < 0 || y < 0 || x + width > image.width() || y + height > image.height() ) {
-            return false;
-        }
-
-        return true;
-    }
-
     bool Verify( const engine4heroes::Image & image, int32_t & x, int32_t & y, int32_t & width, int32_t & height )
     {
         if ( image.empty() || width <= 0 || height <= 0 ) {

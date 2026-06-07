@@ -20,9 +20,11 @@
 
 #include "h4d_file.h"
 
+#include <cassert>
 #include <cstring>
-#include <iostream>
+#include <initializer_list>
 #include <string_view>
+#include <utility>
 
 #include "image_tool.h"
 #include "serialize.h"
