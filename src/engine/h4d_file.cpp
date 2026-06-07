@@ -20,6 +20,7 @@
 
 #include "h4d_file.h"
 
+#include <cstring>
 #include <iostream>
 #include <string_view>
 
