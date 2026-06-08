@@ -214,7 +214,7 @@ bool Configuration::load( const std::string_view fileName )
     }
 
     if ( config.Exists( option3DAudio ) ) {
-        setSoundVolume( config.StrParams( option3DAudio ) == "on" );
+        set3DAudio( config.StrParams( option3DAudio ) == "on" );
     }
 
     if ( config.Exists( optionResolution ) ) {
