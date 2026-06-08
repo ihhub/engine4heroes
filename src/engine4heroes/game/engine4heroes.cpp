@@ -107,11 +107,21 @@ namespace
     public:
         DisplayInitializer()
         {
-            // TODO: load resolution from the configuration.
+            const auto & conf = Configuration::instance();
 
             auto & display = engine4heroes::Display::instance();
-            const engine4heroes::ResolutionInfo bestResolution{ engine4heroes::Display::DEFAULT_WIDTH,
-                                                                engine4heroes::Display::DEFAULT_HEIGHT }; // conf.currentResolutionInfo() };
+            engine4heroes::ResolutionInfo bestResolution{ conf.getResolutionInfo() };
+
+            if ( conf.isFirstGameRun() && System::isHandheldDevice() ) {
+                // We do not show resolution dialog for first run on handheld devices. In this case it is wise to set 'widest' resolution by default.
+                const auto resolutions = engine4heroes::engine().getAvailableResolutions();
+
+                for ( const auto & info : resolutions ) {
+                    if ( info.gameWidth > bestResolution.gameWidth && info.gameHeight == bestResolution.gameHeight ) {
+                        bestResolution = info;
+                    }
+                }
+            }
 
             // display.setWindowPos( conf.getSavedWindowPos() );
             display.setResolution( bestResolution );

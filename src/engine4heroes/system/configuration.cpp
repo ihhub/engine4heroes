@@ -33,7 +33,6 @@
 
 #include "logging.h"
 #include "render_processor.h"
-#include "screen.h"
 #include "serialize.h"
 #include "system.h"
 #include "tinyconfig.h"
@@ -55,6 +54,7 @@ namespace
     const std::string optionTextSupportMode{ "text support mode" };
     const std::string optionCursorSoftwareRendering{ "cursor soft rendering" };
     const std::string optionScreenScalingType{ "screen scaling type" };
+    const std::string optionFirstRun{ "first time game run" };
 }
 
 Configuration & Configuration::instance()
@@ -185,7 +185,7 @@ bool Configuration::load( const std::string_view fileName )
     }
 
     if ( config.Exists( optionFullscreen ) ) {
-        setFullScreen( config.IntParams( optionFullscreen ) );
+        setFullScreen( config.StrParams( optionFullscreen ) == "on" );
     }
 
     if ( config.Exists( optionSystemInfo ) ) {
@@ -195,6 +195,34 @@ bool Configuration::load( const std::string_view fileName )
     if ( config.Exists( optionCursorSoftwareRendering ) ) {
         _isCursorSoftwareRenderingEnabled = ( config.StrParams( optionCursorSoftwareRendering ) == "on" );
         engine4heroes::cursor().enableSoftwareEmulation( _isCursorSoftwareRenderingEnabled );
+    }
+
+    if ( config.Exists( optionScreenScalingType ) ) {
+        setNearestScreenScaling( config.StrParams( optionScreenScalingType ) == "nearest" );
+    }
+
+    if ( config.Exists( optionScreenScalingType ) ) {
+        setTextSupportMode( config.StrParams( optionTextSupportMode ) == "on" );
+    }
+
+    if ( config.Exists( optionMusicVolume ) ) {
+        setMusicVolume( config.IntParams( optionMusicVolume ) );
+    }
+
+    if ( config.Exists( optionSoundVolume ) ) {
+        setSoundVolume( config.IntParams( optionSoundVolume ) );
+    }
+
+    if ( config.Exists( option3DAudio ) ) {
+        setSoundVolume( config.StrParams( option3DAudio ) == "on" );
+    }
+
+    if ( config.Exists( optionResolution ) ) {
+        _resolutionInfo = config.ResolutionParams( optionResolution, { engine4heroes::Display::DEFAULT_WIDTH, engine4heroes::Display::DEFAULT_HEIGHT } );
+    }
+
+    if ( config.Exists( optionFirstRun ) && config.StrParams( optionFirstRun ) == "off" ) {
+        _isFirstGameRun = false;
     }
 
     return true;
@@ -213,7 +241,8 @@ void Configuration::setFullScreen( const bool enable )
 void Configuration::setTextSupportMode( const bool enable )
 {
     _isTextSupportModeEnabled = enable;
-    // TODO: do something.
+    
+    Logging::setTextSupportMode( _isTextSupportModeEnabled );
 }
 
 void Configuration::setSystemInfo( const bool enable )
@@ -230,7 +259,11 @@ void Configuration::setSystemInfo( const bool enable )
 void Configuration::setNearestScreenScaling( const bool enable )
 {
     _isScreenScalingNearest = enable;
-    // TODO: do something.
+    
+    auto & engine = engine4heroes::engine();
+    if ( _isScreenScalingNearest != engine.isNearestScaling() ) {
+        engine.setNearestScaling( enable );
+    }
 }
 
 std::string Configuration::generateConfigFile() const
@@ -277,6 +310,9 @@ std::string Configuration::generateConfigFile() const
 
     os << std::endl << "# Screen scaling type: nearest or linear" << std::endl;
     os << optionScreenScalingType << " = " << ( _isScreenScalingNearest ? "nearest" : "linear" ) << std::endl;
+
+    os << std::endl << "# First time game run (show additional hints): on/off" << std::endl;
+    os << optionFirstRun << " = " << ( _isFirstGameRun ? "on" : "off" ) << std::endl;
 
     return os.str();
 }

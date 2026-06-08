@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <string>
 #include <string_view>
@@ -30,6 +31,7 @@
 #include <vector>
 
 #include "dir.h"
+#include "screen.h"
 
 class Configuration
 {
@@ -74,14 +76,29 @@ public:
         return _soundVolume;
     }
 
+    void setSoundVolume( const int32_t volume )
+    {
+        _soundVolume = std::clamp( volume, 0, 10 );
+    }
+
     int32_t getMusicVolume() const
     {
         return _musicVolume;
     }
 
+    void setMusicVolume( const int32_t volume )
+    {
+        _musicVolume = std::clamp( volume, 0, 10 );
+    }
+
     bool is3DAudioEnabled() const
     {
         return _is3DAudioEnabled;
+    }
+
+    void set3DAudio( const bool enable )
+    {
+        _is3DAudioEnabled = enable;
     }
 
     const std::string & getGameLanguage() const
@@ -130,6 +147,16 @@ public:
         return _isScreenScalingNearest;
     }
 
+    const engine4heroes::ResolutionInfo & getResolutionInfo() const
+    {
+        return _resolutionInfo;
+    }
+
+    bool isFirstGameRun() const
+    {
+        return _isFirstGameRun;
+    }
+
 private:
     std::string _programPath;
 
@@ -138,12 +165,15 @@ private:
     int32_t _soundVolume{ 5 };
     int32_t _musicVolume{ 5 };
 
+    engine4heroes::ResolutionInfo _resolutionInfo{ engine4heroes::Display::DEFAULT_WIDTH, engine4heroes::Display::DEFAULT_HEIGHT };
+
     bool _is3DAudioEnabled{ false };
     bool _isFullScreen{ false };
     bool _isTextSupportModeEnabled{ false };
     bool _isSystemInfoEnabled{ false };
     bool _isCursorSoftwareRenderingEnabled{ false };
     bool _isScreenScalingNearest{ false };
+    bool _isFirstGameRun{ true };
 
     Configuration() = default;
     ~Configuration() = default;

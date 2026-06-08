@@ -79,6 +79,24 @@ namespace
     {
         return { image.x(), image.y(), image.width(), image.height() };
     }
+
+    std::string getGameResourceId()
+    {
+        auto & display = engine4heroes::Display::instance();
+        if ( display.width() == 800 && display.height() == 600 ) {
+            return "layers.menu.main.0800.h4d";
+        }
+        if ( display.width() == 1024 && display.height() == 768 ) {
+            return "layers.menu.main.1024.h4d";
+        }
+        if ( display.width() == 1280 && display.height() == 1024 ) {
+            return "layers.menu.main.1280.h4d";
+        }
+
+        // Do something about it!
+        assert( 0 );
+        return {};
+    }
 }
 
 namespace Game
@@ -92,17 +110,19 @@ namespace Game
         engine4heroes::Image background;
         engine4heroes::Copy( display, background );
 
-        engine4heroes::Button newGameButton{ "layers.menu.main.0800.h4d", 13, 12 };
-        engine4heroes::Button loadGameButton{ "layers.menu.main.0800.h4d", 5, 4 };
-        engine4heroes::Button optionsButton{ "layers.menu.main.0800.h4d", 17, 16 };
-        engine4heroes::Button multiplayerButton{ "layers.menu.main.0800.h4d", 9, 8 };
-        engine4heroes::Button quitButton{ "layers.menu.main.0800.h4d", 21, 20 };
+        const std::string resourceId{ getGameResourceId() };
 
-        const engine4heroes::Rect loadGameTextArea{ getImageRect( GameResource::getImage( "layers.menu.main.0800.h4d", 6 ) ) };
-        const engine4heroes::Rect networkTextArea{ getImageRect( GameResource::getImage( "layers.menu.main.0800.h4d", 10 ) ) };
-        const engine4heroes::Rect newGameTextArea{ getImageRect( GameResource::getImage( "layers.menu.main.0800.h4d", 14 ) ) };
-        const engine4heroes::Rect optionsTextArea{ getImageRect( GameResource::getImage( "layers.menu.main.0800.h4d", 18 ) ) };
-        const engine4heroes::Rect quitTextArea{ getImageRect( GameResource::getImage( "layers.menu.main.0800.h4d", 22 ) ) };
+        engine4heroes::Button newGameButton{ resourceId, 13, 12 };
+        engine4heroes::Button loadGameButton{ resourceId, 5, 4 };
+        engine4heroes::Button optionsButton{ resourceId, 17, 16 };
+        engine4heroes::Button multiplayerButton{ resourceId, 9, 8 };
+        engine4heroes::Button quitButton{ resourceId, 21, 20 };
+
+        const engine4heroes::Rect loadGameTextArea{ getImageRect( GameResource::getImage( resourceId, 6 ) ) };
+        const engine4heroes::Rect networkTextArea{ getImageRect( GameResource::getImage( resourceId, 10 ) ) };
+        const engine4heroes::Rect newGameTextArea{ getImageRect( GameResource::getImage( resourceId, 14 ) ) };
+        const engine4heroes::Rect optionsTextArea{ getImageRect( GameResource::getImage( resourceId, 18 ) ) };
+        const engine4heroes::Rect quitTextArea{ getImageRect( GameResource::getImage( resourceId, 22 ) ) };
 
         BackgroundButtonUpdater loadGameUpdater( background, loadGameTextArea, "Load Game" );
         BackgroundButtonUpdater networkUpdater( background, networkTextArea, "Multiplayer" );
