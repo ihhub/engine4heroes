@@ -62,10 +62,9 @@
 #pragma GCC diagnostic pop
 #endif
 
-// #include "audio.h"
+#include "audio.h"
 #include "image.h"
 #include "logging.h"
-#include "render_processor.h"
 #include "screen.h"
 
 namespace
@@ -1292,12 +1291,12 @@ bool LocalEvent::HandleEvents( const bool sleepAfterEventProcessing /* = true */
 
 void LocalEvent::StopSounds()
 {
-    // Audio::Mute();
+    Audio::Mute();
 }
 
 void LocalEvent::ResumeSounds()
 {
-    // Audio::Unmute();
+    Audio::Unmute();
 }
 
 void LocalEvent::onMouseWheelEvent( engine4heroes::Point position )

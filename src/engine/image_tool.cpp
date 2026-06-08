@@ -21,19 +21,16 @@
 #include "image_tool.h"
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <cstdint>
 #include <cstring>
+#include <initializer_list>
 #include <memory>
 #include <ostream>
-#include <string_view>
 #include <vector>
 
-#include <SDL_error.h>
-#include <SDL_pixels.h>
-#include <SDL_stdinc.h>
 #include <SDL_surface.h>
-#include <SDL_version.h>
 
 #include "image.h"
 #include "serialize.h"

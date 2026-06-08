@@ -26,7 +26,7 @@
 
 namespace
 {
-    constexpr std::array<std::string_view, Music::MusicTrack::COUNT> trackString{ "", "sound.miscellaneous.button.h4d" };
+    constexpr std::array<std::string_view, Music::MusicTrack::COUNT> trackString{ "", "sound.main_menu.h4d" };
 }
 
 namespace Music

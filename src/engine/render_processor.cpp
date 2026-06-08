@@ -23,8 +23,6 @@
 
 #include "render_processor.h"
 
-#include <cstdint>
-
 namespace engine4heroes
 {
     RenderProcessor & RenderProcessor::instance()
