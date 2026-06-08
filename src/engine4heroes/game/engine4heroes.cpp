@@ -194,8 +194,8 @@ int main( int argc, char ** argv )
 
         COUT( GetCaption() )
 
-        std::set<engine4heroes::SystemInitializationComponent> coreComponents{ engine4heroes::SystemInitializationComponent::Audio,
-                                                                               engine4heroes::SystemInitializationComponent::Video };
+        const std::set<engine4heroes::SystemInitializationComponent> coreComponents{ engine4heroes::SystemInitializationComponent::Audio,
+                                                                                     engine4heroes::SystemInitializationComponent::Video };
 
         const engine4heroes::CoreInitializer coreInitializer( coreComponents );
 

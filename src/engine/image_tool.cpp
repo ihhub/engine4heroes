@@ -105,10 +105,10 @@ namespace engine4heroes
         const uint8_t imageType = stream.get();
 
         // Image area, used for rendering on other images.
-        const int32_t startX = stream.getLE32();
-        const int32_t startY = stream.getLE32();
-        const int32_t endX = stream.getLE32();
-        const int32_t endY = stream.getLE32();
+        const int32_t startX = static_cast<int32_t>( stream.getLE32() );
+        const int32_t startY = static_cast<int32_t>( stream.getLE32() );
+        const int32_t endX = static_cast<int32_t>( stream.getLE32() );
+        const int32_t endY = static_cast<int32_t>( stream.getLE32() );
 
         if ( startX == 0 && startY == 0 && endX == 0 && endY == 0 ) {
             // This is a proper empty image.

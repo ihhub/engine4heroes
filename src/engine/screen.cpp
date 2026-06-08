@@ -863,7 +863,7 @@ namespace
                 const uint32_t requiredFlags = SDL_RENDERER_ACCELERATED;
 
                 for ( int driverId = 0; driverId < driverCount; ++driverId ) {
-                    int returnCode = SDL_GetRenderDriverInfo( driverId, &rendererInfo );
+                    const int returnCode = SDL_GetRenderDriverInfo( driverId, &rendererInfo );
                     if ( returnCode < 0 ) {
                         ERROR_LOG( "Failed to get renderer driver info. The error value: " << returnCode << ", description: " << SDL_GetError() )
                         continue;
@@ -1159,7 +1159,6 @@ namespace engine4heroes
 
     void Display::_renderFrame( const Rect & roi ) const
     {
-        bool updateImage = true;
         if ( _preprocessing ) {
             if ( _preprocessing() ) {
                 // Pre-processing step is applied to the whole image so we forcefully render the full frame.
@@ -1168,10 +1167,8 @@ namespace engine4heroes
             }
         }
 
-        if ( updateImage ) {
-            // Make sure that we update the previously rendered area to avoid any ghost effect artefacts.
-            _engine->render( *this, getBoundaryRect( roi, _prevRoi ) );
-        }
+        // Make sure that we update the previously rendered area to avoid any ghost effect artefacts.
+        _engine->render( *this, getBoundaryRect( roi, _prevRoi ) );
     }
 
     void Display::release()
