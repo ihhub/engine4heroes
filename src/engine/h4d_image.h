@@ -23,7 +23,6 @@
 #include <array>
 #include <cstdint>
 #include <memory>
-#include <utility>
 
 namespace engine4heroes
 {

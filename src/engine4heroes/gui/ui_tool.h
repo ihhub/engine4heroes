@@ -42,8 +42,6 @@
 #include "ui_base.h"
 #include "ui_text.h"
 
-enum class InterfaceType : uint8_t;
-
 namespace engine4heroes
 {
     enum class SupportedLanguage : uint8_t;

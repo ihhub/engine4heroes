@@ -20,13 +20,18 @@
 
 #include "resource_manager.h"
 
+#include <cassert>
+#include <functional>
+#include <list>
 #include <map>
+#include <utility>
 #include <vector>
 
 #include "configuration.h"
 #include "dir.h"
 #include "h4d_file.h"
 #include "h4r_file.h"
+#include "image.h"
 #include "tools.h"
 #include "zzlib.h"
 

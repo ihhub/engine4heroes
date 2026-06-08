@@ -21,6 +21,7 @@
 #include "h4d_image.h"
 
 #include <cstring>
+#include <utility>
 
 namespace engine4heroes
 {

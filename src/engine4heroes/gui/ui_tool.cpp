@@ -26,16 +26,12 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
-#include <cmath>
-#include <cstring>
 #include <ctime>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
 
-#include "cursor.h"
 #include "localevent.h"
-#include "render_processor.h"
 #include "screen.h"
 #include "system.h"
 #include "tools.h"

@@ -20,26 +20,21 @@
 
 #include "game_mainmenu.h"
 
-#include <algorithm>
 #include <cassert>
-#include <cmath>
-#include <cstddef>
-#include <cstdint>
-#include <ostream>
 #include <string>
 #include <utility>
-#include <vector>
 
 #include "audio.h"
 #include "audio_manager.h"
-#include "cursor.h"
 #include "game_mainmenu_ui.h"
 #include "image.h"
 #include "localevent.h"
+#include "math_base.h"
 #include "music_info.h"
 #include "resource_manager.h"
 #include "screen.h"
 #include "sound_info.h"
+#include "ui_base.h"
 #include "ui_button.h"
 #include "ui_text.h"
 

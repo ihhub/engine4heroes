@@ -27,17 +27,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <cstdint>
 #include <cstdlib>
 #include <exception>
 #include <functional>
-#include <initializer_list>
 #include <iostream>
-#include <list>
 #include <memory>
 #include <set>
 #include <string>
-#include <vector>
 
 // Managing compiler warnings for SDL headers
 #if defined( __GNUC__ )
@@ -69,15 +65,12 @@
 #include "exception.h"
 #include "game_hotkeys.h"
 #include "game_mainmenu.h"
-#include "image.h"
 #include "localevent.h"
 #include "logging.h"
-#include "math_base.h"
 #include "render_processor.h"
 #include "resource_manager.h"
 #include "screen.h"
 #include "system.h"
-#include "timing.h"
 #include "ui_tool.h"
 
 namespace

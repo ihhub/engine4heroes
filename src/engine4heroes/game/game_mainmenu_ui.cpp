@@ -21,7 +21,9 @@
 #include "game_mainmenu_ui.h"
 
 #include <cassert>
+#include <string>
 
+#include "image.h"
 #include "resource_manager.h"
 #include "screen.h"
 

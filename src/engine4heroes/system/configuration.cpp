@@ -23,6 +23,8 @@
 
 #include "configuration.h"
 
+#include <algorithm>
+#include <cstdlib>
 #include <sstream>
 
 #include "logging.h"

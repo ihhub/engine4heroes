@@ -26,7 +26,6 @@
 
 #pragma once
 
-#include <cassert>
 #include <cstdint>
 
 #include "math_base.h"

@@ -23,8 +23,9 @@
 
 #include "ui_button.h"
 
-#include <algorithm>
 #include <cassert>
+#include <cstddef>
+#include <memory>
 
 #include "image.h"
 #include "math_tools.h"

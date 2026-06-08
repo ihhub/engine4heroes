@@ -24,14 +24,12 @@
 #include "audio_manager.h"
 
 #include <algorithm>
-#include <array>
 #include <atomic>
 #include <cassert>
 #include <climits>
 #include <cstddef>
 #include <cstdlib>
 #include <deque>
-#include <list>
 #include <mutex>
 #include <optional>
 #include <ostream>
@@ -39,16 +37,11 @@
 
 #include "audio.h"
 #include "configuration.h"
-#include "dir.h"
-#include "h4r_file.h"
 #include "logging.h"
 #include "music_info.h"
 #include "resource_manager.h"
-#include "serialize.h"
 #include "sound_info.h"
-#include "system.h"
 #include "thread.h"
-#include "tools.h"
 
 namespace
 {

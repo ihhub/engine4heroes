@@ -25,10 +25,7 @@
 
 #include <cstdint>
 #include <map>
-#include <string>
 #include <vector>
-
-struct ListFiles;
 
 namespace Music
 {

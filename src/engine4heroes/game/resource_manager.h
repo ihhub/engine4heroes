@@ -20,10 +20,14 @@
 
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
-#include "image.h"
+namespace engine4heroes
+{
+    class Sprite;
+}
 
 namespace GameResource
 {
