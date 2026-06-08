@@ -32,6 +32,8 @@
 #include "tinyconfig.h"
 #include "version.h"
 
+#define EXPANDDEF( DEF ) STRINGIFY( DEF )
+
 Configuration & Configuration::instance()
 {
     static Configuration conf;
@@ -48,7 +50,7 @@ const std::vector<std::string> & Configuration::getRootDirs()
     static const std::vector<std::string> rootDirs = []() {
         std::vector<std::string> result;
 
-#if defined( ENGINE4HEROES_DATA )
+#ifdef ENGINE4HEROES_DATA
         // Macro-defined path.
         result.emplace_back( EXPANDDEF( ENGINE4HEROES_DATA ) );
 #endif
