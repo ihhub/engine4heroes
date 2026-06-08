@@ -230,13 +230,13 @@ namespace
         const uint32_t width = stream.getLE32();
         const uint32_t height = stream.getLE32();
 
-        image.resize( width, height );
+        image.resize( static_cast<int32_t>( width ), static_cast<int32_t>( height ) );
         image.fill( 0 );
 
         const size_t size = width * height;
 
-        const int32_t offsetX = stream.getLE32();
-        const int32_t offsetY = stream.getLE32();
+        const int32_t offsetX = static_cast<int32_t>( stream.getLE32() );
+        const int32_t offsetY = static_cast<int32_t>( stream.getLE32() );
         image.setPosition( offsetX, offsetY );
 
         auto [data, realSize] = stream.getRawView( width * height );
@@ -381,7 +381,7 @@ namespace File
         return {};
     }
 
-    bool H4DFile::process( const std::string & entryName, const std::vector<uint8_t> & data )
+    bool processH4DFile( const std::string & entryName, const std::vector<uint8_t> & data )
     {
         if ( data.empty() ) {
             return true;

@@ -32,9 +32,5 @@ namespace File
 
     std::vector<uint8_t> getAudioStream( const std::string & entryName, const std::vector<uint8_t> & data );
 
-    class H4DFile final
-    {
-    public:
-        bool process( const std::string & entryName, const std::vector<uint8_t> & data );
-    };
+    bool processH4DFile( const std::string & entryName, const std::vector<uint8_t> & data );
 }

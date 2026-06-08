@@ -268,10 +268,6 @@ namespace
             if ( fullFrame ) {
                 uint32_t * out = static_cast<uint32_t *>( surface->pixels );
 
-                // for ( int32_t i = 0; i < imageWidth * imageHeight; ++i ) {
-                //     out[i] = Rand::Get( 0, 16777215U );
-                // }
-
                 memcpy( out, imageIn, imageWidth * imageHeight * sizeof( uint32_t ) );
             }
             else {
@@ -361,7 +357,6 @@ namespace
             }
 
             SDL_Surface * surface = SDL_CreateRGBSurface( 0, image.width(), image.height(), 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000 );
-            // SDL_SetSurfaceBlendMode( surface, SDL_BLENDMODE_BLEND );
             if ( surface == nullptr ) {
                 ERROR_LOG( "Failed to create a surface of " << image.width() << " x " << image.height() << " size for cursor. The error: " << SDL_GetError() )
                 return;

@@ -117,8 +117,8 @@ namespace
             // TODO: load resolution from the configuration.
 
             auto & display = engine4heroes::Display::instance();
-            engine4heroes::ResolutionInfo bestResolution{ engine4heroes::Display::DEFAULT_WIDTH,
-                                                          engine4heroes::Display::DEFAULT_HEIGHT }; // conf.currentResolutionInfo() };
+            const engine4heroes::ResolutionInfo bestResolution{ engine4heroes::Display::DEFAULT_WIDTH,
+                                                                engine4heroes::Display::DEFAULT_HEIGHT }; // conf.currentResolutionInfo() };
 
             // display.setWindowPos( conf.getSavedWindowPos() );
             display.setResolution( bestResolution );

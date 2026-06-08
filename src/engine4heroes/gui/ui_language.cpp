@@ -114,7 +114,7 @@ namespace engine4heroes
 
         auto & conf = Configuration::instance();
 
-        engine4heroes::SupportedLanguage currentLanguage = engine4heroes::getLanguageFromAbbreviation( conf.getGameLanguage() );
+        const engine4heroes::SupportedLanguage currentLanguage = engine4heroes::getLanguageFromAbbreviation( conf.getGameLanguage() );
 
         std::vector<engine4heroes::SupportedLanguage> validSupportedLanguages{ engine4heroes::SupportedLanguage::English };
 
