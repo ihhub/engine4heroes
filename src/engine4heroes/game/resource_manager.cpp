@@ -37,8 +37,8 @@
 
 namespace
 {
-    std::map<std::string, std::vector<engine4heroes::Sprite>> imageCache;
-    std::map<std::string, std::vector<uint8_t>> audioCache;
+    std::map<std::string, std::unique_ptr<std::vector<engine4heroes::Sprite>>> imageCache;
+    std::map<std::string, std::unique_ptr<std::vector<uint8_t>>> audioCache;
 
     const engine4heroes::Sprite emptyImage;
     const std::vector<uint8_t> emptyAudioTrack;
@@ -87,11 +87,11 @@ namespace GameResource
     {
         const auto imageIter = imageCache.find( imagePath );
         if ( imageIter != imageCache.end() ) {
-            if ( imageIndex >= imageIter->second.size() ) {
+            if ( imageIndex >= imageIter->second->size() ) {
                 return emptyImage;
             }
 
-            return imageIter->second[imageIndex];
+            return ( *imageIter->second.get() )[imageIndex];
         }
 
         const auto iter = heroes4.getFileEntries().find( imagePath );
@@ -111,24 +111,24 @@ namespace GameResource
         }
 
         std::vector<engine4heroes::Sprite> images = File::getImages( imagePath, unpacked );
-        const auto [newDataIter, isSuccess] = imageCache.emplace( imagePath, std::move( images ) );
+        const auto [newDataIter, isSuccess] = imageCache.try_emplace( imagePath, std::make_unique<std::vector<engine4heroes::Sprite>>( std::move( images ) ) );
         if ( !isSuccess ) {
             assert( 0 );
             return emptyImage;
         }
 
-        if ( imageIndex >= newDataIter->second.size() ) {
+        if ( imageIndex >= newDataIter->second.get()->size() ) {
             return emptyImage;
         }
 
-        return newDataIter->second[imageIndex];
+        return ( *newDataIter->second )[imageIndex];
     }
 
     const std::vector<uint8_t> & getAudioStream( const std::string & audioPath )
     {
         const auto audioIter = audioCache.find( audioPath );
         if ( audioIter != audioCache.end() ) {
-            return audioIter->second;
+            return *( audioIter->second.get() );
         }
 
         std::vector<uint8_t> data;
@@ -154,9 +154,9 @@ namespace GameResource
             return emptyAudioTrack;
         }
 
-        const auto [newDataIter, isSuccess] = audioCache.emplace( audioPath, File::getAudioStream( audioPath, unpacked ) );
+        const auto [newDataIter, isSuccess] = audioCache.emplace( audioPath, std::make_unique<std::vector<uint8_t>>( File::getAudioStream( audioPath, unpacked ) ) );
         assert( isSuccess );
 
-        return newDataIter->second;
+        return *( newDataIter->second.get() );
     }
 }
