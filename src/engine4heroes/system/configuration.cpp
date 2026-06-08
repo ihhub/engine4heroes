@@ -158,13 +158,9 @@ bool Configuration::load( const std::string_view fileName )
 {
     TinyConfig config( '=', '#' );
 
-    if ( !config.Load( std::string( fileName ) ) ) {
-        return false;
-    }
-
     // TODO: load stuff.
 
-    return true;
+    return config.Load( std::string( fileName ) );
 }
 
 void Configuration::setFullScreen( const bool enable )

@@ -233,7 +233,7 @@ namespace engine4heroes
         const Sprite & _getReleased() const override;
 
     private:
-        std::string _resourceName{};
+        std::string _resourceName;
         uint32_t _releasedIndex{ 0 };
         uint32_t _pressedIndex{ 0 };
     };

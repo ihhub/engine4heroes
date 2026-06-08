@@ -87,7 +87,7 @@ namespace engine4heroes
 
         void setPalette( std::array<Color, 256> palette )
         {
-            _palette = std::move( palette );
+            _palette = palette;
         }
 
         const std::array<Color, 256> & palette() const
@@ -102,60 +102,5 @@ namespace engine4heroes
         int32_t _height{ 0 };
         std::unique_ptr<uint8_t[]> _data;
         std::array<Color, 256> _palette;
-    };
-
-    class PackedSprite : public PackedImage
-    {
-    public:
-        PackedSprite() = default;
-        PackedSprite( const int32_t width, const int32_t height, const int32_t x = 0, const int32_t y = 0 )
-            : PackedImage( width, height )
-            , _x( x )
-            , _y( y )
-        {
-            // Do nothing.
-        }
-
-        explicit PackedSprite( const PackedImage & image, const int32_t x = 0, const int32_t y = 0 )
-            : PackedImage( image )
-            , _x( x )
-            , _y( y )
-        {
-            // Do nothing.
-        }
-
-        explicit PackedSprite( PackedImage && image, const int32_t x = 0, const int32_t y = 0 )
-            : PackedImage( std::move( image ) )
-            , _x( x )
-            , _y( y )
-        {
-            // Do nothing.
-        }
-
-        PackedSprite( const PackedSprite & sprite ) = default;
-        PackedSprite( PackedSprite && sprite ) noexcept;
-
-        ~PackedSprite() override = default;
-
-        PackedSprite & operator=( const PackedSprite & sprite );
-        PackedSprite & operator=( PackedSprite && sprite ) noexcept;
-
-        PackedSprite & operator=( PackedImage && image ) noexcept;
-
-        int32_t x() const
-        {
-            return _x;
-        }
-
-        int32_t y() const
-        {
-            return _y;
-        }
-
-        virtual void setPosition( const int32_t x_, const int32_t y_ );
-
-    private:
-        int32_t _x{ 0 };
-        int32_t _y{ 0 };
     };
 }

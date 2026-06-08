@@ -77,7 +77,6 @@ namespace engine4heroes
             return false;
         }
 
-        // engine4heroes::PackedSprite tempSprite;
         std::array<Color, 256> palette;
         for ( uint32_t i = 0; i < std::min( paletteSize, 256U ); ++i ) {
             palette[i].red = stream.get();

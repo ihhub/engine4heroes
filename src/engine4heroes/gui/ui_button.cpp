@@ -97,7 +97,7 @@ namespace engine4heroes
         const Sprite & sprite = _getReleased();
         if ( !_disabledSprite || ( _releasedSprite != &sprite ) ) {
             _releasedSprite = &sprite;
-            _disabledSprite.reset( new Sprite( sprite ) );
+            _disabledSprite = std::make_unique<Sprite>( sprite );
             // ApplyPalette( *_disabledSprite, PAL::GetPalette( PAL::PaletteType::DARKENING ) );
         }
 
@@ -105,8 +105,7 @@ namespace engine4heroes
     }
 
     Button::Button( std::string resourceName, const uint32_t releasedIndex, const uint32_t pressedIndex )
-        : ButtonBase()
-        , _resourceName( std::move( resourceName ) )
+        : _resourceName( std::move( resourceName ) )
         , _releasedIndex( releasedIndex )
         , _pressedIndex( pressedIndex )
     {

@@ -41,7 +41,7 @@ namespace
     File::H4RFile heroes4;
     File::H4RFile musicData;
 
-    std::string getValidH4RFileName( const std::string filename, const ListFiles & candidates )
+    std::string getValidH4RFileName( const std::string & filename, const ListFiles & candidates )
     {
         for ( const std::string & path : candidates ) {
             if ( path.size() < filename.size() ) {
@@ -49,7 +49,7 @@ namespace
                 continue;
             }
 
-            std::string tempPath = StringLower( path );
+            const std::string tempPath = StringLower( path );
 
             if ( tempPath.compare( tempPath.size() - filename.size(), filename.size(), filename ) == 0 ) {
                 return path;
@@ -75,11 +75,7 @@ namespace GameResource
         }
 
         const std::string musicFilename = getValidH4RFileName( "music.h4r", fileCandidates );
-        if ( !musicData.open( musicFilename ) ) {
-            return false;
-        }
-
-        return true;
+        return musicData.open( musicFilename );
     }
 
     const engine4heroes::Sprite & getImage( const std::string & imagePath, const uint32_t imageIndex )

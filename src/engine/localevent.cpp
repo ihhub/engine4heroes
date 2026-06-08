@@ -1177,7 +1177,7 @@ namespace engine4heroes
             break;
 
         default: {
-            char c = getCharacterFromPressedKey( key, mod );
+            const char c = getCharacterFromPressedKey( key, mod );
 
             if ( c ) {
                 res.insert( pos, 1, c );
@@ -1620,9 +1620,9 @@ void LocalEvent::onRenderDeviceResetEvent()
     engine4heroes::Display & display = engine4heroes::Display::instance();
     engine4heroes::Image temp;
 
-    // engine4heroes::Copy( display, temp );
+    engine4heroes::Copy( display, temp );
     display.release();
-    // engine4heroes::Copy( temp, display );
+    engine4heroes::Copy( temp, display );
 }
 
 void LocalEvent::onKeyboardEvent( const engine4heroes::Key key, const int32_t keyModifier, const KeyboardEventState keyState )

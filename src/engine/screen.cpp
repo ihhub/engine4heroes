@@ -242,7 +242,7 @@ namespace
         std::vector<uint32_t> _palette32Bit;
         std::vector<SDL_Color> _palette8Bit;
 
-        void copyImageToSurface( const engine4heroes::Image & image, SDL_Surface * surface, const engine4heroes::Rect & roi )
+        static void copyImageToSurface( const engine4heroes::Image & image, SDL_Surface * surface, const engine4heroes::Rect & roi )
         {
             assert( surface != nullptr && !image.empty() );
 
@@ -289,7 +289,7 @@ namespace
             }
         }
 
-        SDL_Surface * generateIconSurface( const engine4heroes::Image & icon )
+        static SDL_Surface * generateIconSurface( const engine4heroes::Image & icon )
         {
             if ( icon.empty() ) {
                 // What are you trying to do? Icon should have not empty both image and transform layers.
@@ -1188,7 +1188,7 @@ namespace engine4heroes
         _prevRoi = {};
     }
 
-    bool Cursor::isFocusActive() const
+    bool Cursor::isFocusActive()
     {
         return engine().isMouseCursorActive();
     }

@@ -131,7 +131,7 @@ namespace Game
 
         AudioManager::PlayMusicAsync( Music::MAIN_MENU, Music::PlaybackMode::REWIND_AND_PLAY_INFINITE );
 
-        engine4heroes::Text text{ "This is a test text.", engine4heroes::FontType::normalWhite() };
+        const engine4heroes::Text text{ "This is a test text.", engine4heroes::FontType::normalWhite() };
         text.draw( 100, 550, display );
 
         auto & eventHandler = LocalEvent::Get();

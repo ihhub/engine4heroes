@@ -93,7 +93,7 @@ bool TinyConfig::Load( const std::string & cfile )
             continue;
         }
 
-        size_t pos = str.find( separator );
+        const size_t pos = str.find( separator );
         if ( pos == std::string::npos ) {
             continue;
         }
@@ -111,7 +111,7 @@ bool TinyConfig::Load( const std::string & cfile )
 
 int TinyConfig::IntParams( const std::string & key ) const
 {
-    const_iterator it = find( ModifyKey( key ) );
+    const auto it = find( ModifyKey( key ) );
     if ( it == end() ) {
         return 0;
     }
@@ -127,13 +127,13 @@ int TinyConfig::IntParams( const std::string & key ) const
 
 std::string TinyConfig::StrParams( const std::string & key ) const
 {
-    const_iterator it = find( ModifyKey( key ) );
+    const auto it = find( ModifyKey( key ) );
     return it != end() ? it->second : "";
 }
 
 engine4heroes::Point TinyConfig::PointParams( const std::string & key, const engine4heroes::Point & fallbackValue ) const
 {
-    const const_iterator it = find( ModifyKey( key ) );
+    const auto it = find( ModifyKey( key ) );
     if ( it == end() ) {
         return fallbackValue;
     }
@@ -165,7 +165,7 @@ engine4heroes::Point TinyConfig::PointParams( const std::string & key, const eng
 
 engine4heroes::ResolutionInfo TinyConfig::ResolutionParams( const std::string & key, const engine4heroes::ResolutionInfo & fallbackValue ) const
 {
-    const const_iterator it = find( ModifyKey( key ) );
+    const auto it = find( ModifyKey( key ) );
     if ( it == end() ) {
         return fallbackValue;
     }

@@ -51,11 +51,7 @@ namespace
         (void)entryName;
 
         std::string imageName;
-        if ( !engine4heroes::decodeH4DSprite( stream, output, imageName ) ) {
-            return false;
-        }
-
-        return true;
+        return engine4heroes::decodeH4DSprite( stream, output, imageName );
     }
 
     bool processLayersObject( const std::string & entryName, ROStreamBuf & stream, std::vector<engine4heroes::Sprite> & images )
@@ -79,11 +75,11 @@ namespace
         return true;
     }
 
-    bool processActorSequence( const std::string & entryName, ROStreamBuf & stream, std::vector<engine4heroes::Sprite> images )
+    bool processActorSequence( const std::string & entryName, ROStreamBuf & stream, std::vector<engine4heroes::Sprite> & images )
     {
-        const int16_t fileType = stream.getLE16();
+        const uint16_t fileType = stream.getLE16();
         (void)fileType;
-        const int16_t fileFormat = stream.getLE16();
+        const uint16_t fileFormat = stream.getLE16();
 
         std::vector<uint8_t> info;
 
@@ -112,14 +108,14 @@ namespace
     bool processRawBitmap( ROStreamBuf & stream, std::vector<engine4heroes::Sprite> & images )
     {
         // Raw bitmap literally contain raw bitmap 24-bit images.
-        const int16_t fileType = stream.getLE16();
+        const uint16_t fileType = stream.getLE16();
         if ( fileType != 1 ) {
             // No idea how to handle this yet.
             assert( 0 );
             return false;
         }
 
-        const int16_t fileFormat = stream.getLE16();
+        const uint16_t fileFormat = stream.getLE16();
         if ( fileFormat != 0 ) {
             // No idea how to handle this yet.
             assert( 0 );
@@ -142,7 +138,7 @@ namespace
         }
 
         engine4heroes::Sprite image;
-        image.resize( width, height );
+        image.resize( static_cast<int32_t>( width ), static_cast<int32_t>( height ) );
 
         uint32_t * data = image.image();
         const uint32_t * dataEnd = data + width * height;

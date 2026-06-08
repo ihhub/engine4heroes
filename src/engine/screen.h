@@ -107,12 +107,12 @@ namespace engine4heroes
             return {};
         }
 
-        virtual void setTitle( const std::string & )
+        virtual void setTitle( const std::string & /*unused*/ )
         {
             // Do nothing.
         }
 
-        virtual void setIcon( const Image & )
+        virtual void setIcon( const Image & /*unused*/ )
         {
             // Do nothing.
         }
@@ -127,7 +127,7 @@ namespace engine4heroes
             return {};
         }
 
-        virtual void setVSync( const bool )
+        virtual void setVSync( const bool /*unused*/ )
         {
             // Do nothing.
         }
@@ -153,19 +153,14 @@ namespace engine4heroes
         }
 
     protected:
-        BaseRenderEngine()
-            : _isFullScreen( false )
-            , _nearestScaling( false )
-        {
-            // Do nothing.
-        }
+        BaseRenderEngine() = default;
 
         virtual void clear()
         {
             // Do nothing.
         }
 
-        virtual void render( const Display &, const Rect & )
+        virtual void render( const Display & /*unused*/, const Rect & /*unused*/ )
         {
             // Do nothing.
         }
@@ -181,9 +176,9 @@ namespace engine4heroes
         }
 
     private:
-        bool _isFullScreen;
+        bool _isFullScreen{ false };
 
-        bool _nearestScaling;
+        bool _nearestScaling{ false };
     };
 
     class Display final : public Image
@@ -285,7 +280,7 @@ namespace engine4heroes
             return _show;
         }
 
-        bool isFocusActive() const;
+        static bool isFocusActive();
 
         virtual void update( const Image & image, int32_t offsetX, int32_t offsetY )
         {
@@ -298,7 +293,7 @@ namespace engine4heroes
         }
 
         // Default implementation of Cursor uses software emulation.
-        virtual void enableSoftwareEmulation( const bool )
+        virtual void enableSoftwareEmulation( const bool /*unused*/ )
         {
             // Do nothing.
         }
