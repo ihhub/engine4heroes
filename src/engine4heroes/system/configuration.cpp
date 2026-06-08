@@ -241,7 +241,7 @@ void Configuration::setFullScreen( const bool enable )
 void Configuration::setTextSupportMode( const bool enable )
 {
     _isTextSupportModeEnabled = enable;
-    
+
     Logging::setTextSupportMode( _isTextSupportModeEnabled );
 }
 
@@ -259,7 +259,7 @@ void Configuration::setSystemInfo( const bool enable )
 void Configuration::setNearestScreenScaling( const bool enable )
 {
     _isScreenScalingNearest = enable;
-    
+
     auto & engine = engine4heroes::engine();
     if ( _isScreenScalingNearest != engine.isNearestScaling() ) {
         engine.setNearestScaling( enable );
