@@ -2,6 +2,9 @@
 #   engine4heroes: https://github.com/ihhub/engine4heroes                 #
 #   Copyright (C) 2026                                                    #
 #                                                                         #
+#   fheroes2: https://github.com/ihhub/fheroes2                           #
+#   Copyright (C) 2022 - 2025                                             #
+#                                                                         #
 #   This program is free software; you can redistribute it and/or modify  #
 #   it under the terms of the GNU General Public License as published by  #
 #   the Free Software Foundation; either version 2 of the License, or     #
@@ -42,9 +45,6 @@ option(ENABLE_TOOLS "Enable the build of additional tools" OFF)
 # Available only on macOS
 cmake_dependent_option(MACOS_APP_BUNDLE "Create a Mac app bundle" OFF "APPLE" OFF)
 
-# Should not be available if we are creating a Mac app bundle
-cmake_dependent_option(GET_HOMM2_DEMO "Fetch and install the HoMM II demo data" OFF "NOT MACOS_APP_BUNDLE" OFF)
-
 set(USE_SDL_VERSION SDL2 CACHE STRING "Version of the SDL library used")
 set(ENGINE4HEROES_DATA ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME} CACHE STRING "Path to the engine4heroes data directory (relative to CMAKE_INSTALL_PREFIX)")
 
@@ -70,3 +70,15 @@ endif(ENABLE_IMAGE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_subdirectory(src)
+
+#
+# macOS app bundle
+#
+if(MACOS_APP_BUNDLE)
+	add_custom_target(
+		run_dylibbundler
+		ALL
+		COMMAND dylibbundler -od -b -x ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}.app/Contents/MacOS/${PROJECT_NAME} -d ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}.app/Contents/libs
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		)
+endif(MACOS_APP_BUNDLE)
