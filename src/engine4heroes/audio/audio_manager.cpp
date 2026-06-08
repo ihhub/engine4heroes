@@ -366,7 +366,6 @@ namespace
         Music::Play( trackId, getMusic( trackId ), playbackMode );
 
         currentMusicTrackId = trackId;
-        return;
     }
 
     std::pair<size_t, size_t> findPairOfClosestSoundEffects( const std::vector<AudioManager::AudioLoopEffectInfo> & effectsToAdd,
