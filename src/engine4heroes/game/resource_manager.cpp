@@ -112,7 +112,10 @@ namespace GameResource
 
         std::vector<engine4heroes::Sprite> images = File::getImages( imagePath, unpacked );
         const auto [newDataIter, isSuccess] = imageCache.emplace( std::move( imagePath ), std::move( images ) );
-        assert( isSuccess );
+        if ( !isSuccess ) {
+            assert( 0 );
+            return emptyImage;
+        }
 
         if ( imageIndex >= newDataIter->second.size() ) {
             return emptyImage;
