@@ -32,6 +32,7 @@
 #include "tinyconfig.h"
 #include "version.h"
 
+#define STRINGIFY( DEF ) #DEF
 #define EXPANDDEF( DEF ) STRINGIFY( DEF )
 
 Configuration & Configuration::instance()
