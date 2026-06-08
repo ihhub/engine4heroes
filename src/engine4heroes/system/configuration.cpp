@@ -27,6 +27,10 @@
 #include <cstdlib>
 #include <sstream>
 
+#if defined( MACOS_APP_BUNDLE )
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include "logging.h"
 #include "render_processor.h"
 #include "screen.h"
