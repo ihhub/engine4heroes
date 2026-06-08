@@ -129,9 +129,9 @@ namespace engine4heroes
         std::vector<ImageLineInfo> lineInfo;
         lineInfo.resize( height );
         for ( auto & info : lineInfo ) {
-            info.startX = stream.getLE16();
-            info.endX = stream.getLE16();
-            info.offset = stream.getLE32();
+            info.startX = static_cast<int16_t>( stream.getLE16() );
+            info.endX = static_cast<int16_t>( stream.getLE16() );
+            info.offset = static_cast<int32_t>( stream.getLE32() );
         }
 
         assert( lineInfo[0].offset == 0 );

@@ -186,7 +186,7 @@ namespace engine4heroes
     size_t InsertKeySym( std::string & res, size_t pos, const Key key, const int32_t mod );
 }
 
-class LocalEvent
+class LocalEvent final
 {
 public:
     friend class EventProcessing::EventEngine;
@@ -519,6 +519,8 @@ private:
     static void onRenderDeviceResetEvent();
 
     LocalEvent();
+
+    ~LocalEvent() = default;
 
     void onMouseMotionEvent( engine4heroes::Point position );
     void onMouseButtonEvent( const bool isPressed, const MouseButtonType buttonType, engine4heroes::Point position );

@@ -33,6 +33,7 @@
 #include <mutex>
 #include <optional>
 #include <ostream>
+#include <string>
 #include <utility>
 
 #include "audio.h"
