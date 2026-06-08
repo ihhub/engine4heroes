@@ -14,7 +14,6 @@
     <ClCompile Include="src\engine\math_tools.cpp" />
     <ClCompile Include="src\engine\rand.cpp" />
     <ClCompile Include="src\engine\render_processor.cpp" />
-    <ClCompile Include="src\engine\resource_manager.cpp" />
     <ClCompile Include="src\engine\screen.cpp" />
     <ClCompile Include="src\engine\serialize.cpp" />
     <ClCompile Include="src\engine\system.cpp" />
@@ -32,6 +31,7 @@
     <ClCompile Include="src\engine4heroes\game\game_mainmenu.cpp" />
     <ClCompile Include="src\engine4heroes\game\game_mainmenu_ui.cpp" />
     <ClCompile Include="src\engine4heroes\game\game_string.cpp" />
+    <ClCompile Include="src\engine4heroes\game\resource_manager.cpp" />
     <ClCompile Include="src\engine4heroes\gui\cursor.cpp" />
     <ClCompile Include="src\engine4heroes\system\configuration.cpp" />
     <ClCompile Include="src\engine4heroes\gui\ui_base.cpp" />
@@ -56,7 +56,6 @@
     <ClInclude Include="src\engine\math_tools.h" />
     <ClInclude Include="src\engine\rand.h" />
     <ClInclude Include="src\engine\render_processor.h" />
-    <ClInclude Include="src\engine\resource_manager.h" />
     <ClInclude Include="src\engine\screen.h" />
     <ClInclude Include="src\engine\serialize.h" />
     <ClInclude Include="src\engine\system.h" />
@@ -74,6 +73,7 @@
     <ClInclude Include="src\engine4heroes\game\game_mainmenu.h" />
     <ClInclude Include="src\engine4heroes\game\game_mainmenu_ui.h" />
     <ClInclude Include="src\engine4heroes\game\game_string.h" />
+    <ClInclude Include="src\engine4heroes\game\resource_manager.h" />
     <ClInclude Include="src\engine4heroes\gui\cursor.h" />
     <ClInclude Include="src\engine4heroes\gui\ui_base.h" />
     <ClInclude Include="src\engine4heroes\gui\ui_button.h" />
