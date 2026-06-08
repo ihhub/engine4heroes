@@ -155,8 +155,6 @@ bool Configuration::load( const std::string_view fileName )
 {
     TinyConfig config( '=', '#' );
 
-    std::string sval;
-
     if ( !config.Load( std::string( fileName ) ) ) {
         return false;
     }

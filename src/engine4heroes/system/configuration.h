@@ -88,7 +88,7 @@ public:
 
     bool setGameLanguage( std::string language )
     {
-        _gameLanguage = language;
+        _gameLanguage = std::move( language );
 
         // TODO: load a translation for this language.
         return true;
