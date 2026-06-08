@@ -73,7 +73,6 @@
 #include "localevent.h"
 #include "logging.h"
 #include "math_base.h"
-#include "rand.h"
 #include "render_processor.h"
 #include "resource_manager.h"
 #include "screen.h"

@@ -27,7 +27,6 @@
 #include <cstring>
 #include <initializer_list>
 #include <memory>
-#include <ostream>
 #include <vector>
 
 #include <SDL_surface.h>
