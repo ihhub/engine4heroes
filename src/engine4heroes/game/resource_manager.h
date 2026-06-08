@@ -34,7 +34,7 @@ namespace GameResource
     // This function must be called at the very beginning to make sure that we have access to game resources.
     bool initializeResources();
 
-    const engine4heroes::Sprite & getImage( std::string imagePath, const uint32_t imageIndex );
+    const engine4heroes::Sprite & getImage( const std::string & imagePath, const uint32_t imageIndex );
 
     const std::vector<uint8_t> & getAudioStream( const std::string & audioPath );
 }
