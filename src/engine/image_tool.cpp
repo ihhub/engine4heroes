@@ -231,7 +231,7 @@ namespace engine4heroes
 
                 imageX += info.startX;
 
-                for ( size_t x = 0; x < info.endX - info.startX; ++x, ++imageX, ++mask ) {
+                for ( int32_t x = 0; x < info.endX - info.startX; ++x, ++imageX, ++mask ) {
                     *imageX = ( *imageX & 0xFFFFFF ) + ( *mask << 24U );
                 }
 
