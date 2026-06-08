@@ -260,7 +260,9 @@ namespace engine4heroes
             return false;
         }
 
-        if ( surface->pitch != image.width() * sizeof( uint32_t ) ) {
+        static_assert( sizeof( uint32_t ) == 4 );
+
+        if ( surface->pitch != image.width() * 4 ) {
             const uint32_t * imageIn = image.image();
 
             for ( int32_t i = 0; i < image.height(); ++i ) {
