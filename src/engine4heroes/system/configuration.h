@@ -118,11 +118,9 @@ public:
         return _isSystemInfoEnabled;
     }
 
-    void setSoftwareCursor( const bool enable );
-
-    bool isSoftwareCursorEnabled() const
+    bool isCursorSoftwareRenderingEnabled() const
     {
-        return _isSoftwareCursorEnabled;
+        return _isCursorSoftwareRenderingEnabled;
     }
 
     void setNearestScreenScaling( const bool enable );
@@ -144,7 +142,7 @@ private:
     bool _isFullScreen{ false };
     bool _isTextSupportModeEnabled{ false };
     bool _isSystemInfoEnabled{ false };
-    bool _isSoftwareCursorEnabled{ false };
+    bool _isCursorSoftwareRenderingEnabled{ false };
     bool _isScreenScalingNearest{ false };
 
     Configuration() = default;

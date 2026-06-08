@@ -192,6 +192,11 @@ bool Configuration::load( const std::string_view fileName )
         setSystemInfo( config.StrParams( optionSystemInfo ) == "on" );
     }
 
+    if ( config.Exists( optionCursorSoftwareRendering ) ) {
+        _isCursorSoftwareRenderingEnabled = ( config.StrParams( optionCursorSoftwareRendering ) == "on" );
+        engine4heroes::cursor().enableSoftwareEmulation( _isCursorSoftwareRenderingEnabled );
+    }
+
     return true;
 }
 
@@ -220,12 +225,6 @@ void Configuration::setSystemInfo( const bool enable )
     else {
         engine4heroes::RenderProcessor::instance().disableRenderers();
     }
-}
-
-void Configuration::setSoftwareCursor( const bool enable )
-{
-    _isSoftwareCursorEnabled = enable;
-    // TODO: do something.
 }
 
 void Configuration::setNearestScreenScaling( const bool enable )
@@ -274,7 +273,7 @@ std::string Configuration::generateConfigFile() const
     os << optionSystemInfo << " = " << ( _isTextSupportModeEnabled ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Enable cursor software rendering: on/off" << std::endl;
-    os << optionCursorSoftwareRendering << " = " << ( _isSoftwareCursorEnabled ? "on" : "off" ) << std::endl;
+    os << optionCursorSoftwareRendering << " = " << ( _isCursorSoftwareRenderingEnabled ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Screen scaling type: nearest or linear" << std::endl;
     os << optionScreenScalingType << " = " << ( _isScreenScalingNearest ? "nearest" : "linear" ) << std::endl;
