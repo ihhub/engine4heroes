@@ -50,7 +50,7 @@ const std::vector<std::string> & Configuration::getRootDirs()
 
 #if defined( ENGINE4HEROES_DATA )
         // Macro-defined path.
-        result.emplace_back( EXPANDDEF( ENGINE4HEROES ) );
+        result.emplace_back( EXPANDDEF( ENGINE4HEROES_DATA ) );
 #endif
 
 #if defined( __IPHONEOS__ )
