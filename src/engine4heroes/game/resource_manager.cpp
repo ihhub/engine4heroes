@@ -83,7 +83,7 @@ namespace GameResource
         return musicData.open( musicFilename );
     }
 
-    const engine4heroes::Sprite & getImage( const std::string & imagePath, const uint32_t imageIndex )
+    const engine4heroes::Sprite & getImage( std::string imagePath, const uint32_t imageIndex )
     {
         const auto imageIter = imageCache.find( imagePath );
         if ( imageIter != imageCache.end() ) {
@@ -110,7 +110,8 @@ namespace GameResource
             return emptyImage;
         }
 
-        const auto [newDataIter, isSuccess] = imageCache.emplace( imagePath, File::getImages( imagePath, unpacked ) );
+        std::vector<engine4heroes::Sprite> images = File::getImages( imagePath, unpacked );
+        const auto [newDataIter, isSuccess] = imageCache.emplace( std::move( imagePath ), std::move( images ) );
         assert( isSuccess );
 
         if ( imageIndex >= newDataIter->second.size() ) {
