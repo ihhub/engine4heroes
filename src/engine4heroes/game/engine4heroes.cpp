@@ -34,6 +34,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 // Managing compiler warnings for SDL headers
 #if defined( __GNUC__ )
