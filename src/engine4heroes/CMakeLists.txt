@@ -1,0 +1,100 @@
+###########################################################################
+#   engine4heroes: https://github.com/ihhub/engine4heroes                 #
+#   Copyright (C) 2026                                                    #
+#                                                                         #
+#   fheroes2: https://github.com/ihhub/fheroes2                           #
+#   Copyright (C) 2022 - 2024                                             #
+#                                                                         #
+#   This program is free software; you can redistribute it and/or modify  #
+#   it under the terms of the GNU General Public License as published by  #
+#   the Free Software Foundation; either version 2 of the License, or     #
+#   (at your option) any later version.                                   #
+#                                                                         #
+#   This program is distributed in the hope that it will be useful,       #
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+#   GNU General Public License for more details.                          #
+#                                                                         #
+#   You should have received a copy of the GNU General Public License     #
+#   along with this program; if not, write to the                         #
+#   Free Software Foundation, Inc.,                                       #
+#   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
+###########################################################################
+
+file(GLOB_RECURSE ENGINE4HEROES_SOURCES CONFIGURE_DEPENDS *.cpp)
+
+add_compile_options("$<$<COMPILE_LANG_AND_ID:C,AppleClang,Clang,GNU>:${GNU_CC_WARN_OPTS}>")
+add_compile_options("$<$<COMPILE_LANG_AND_ID:CXX,AppleClang,Clang,GNU>:${GNU_CXX_WARN_OPTS}>")
+add_compile_options("$<$<OR:$<COMPILE_LANG_AND_ID:C,MSVC>,$<COMPILE_LANG_AND_ID:CXX,MSVC>>:${MSVC_CC_WARN_OPTS}>")
+
+if(MACOS_APP_BUNDLE)
+	set(ENGINE4HEROES_ICON ${CMAKE_CURRENT_SOURCE_DIR}/../resources/engine4heroes.icns)
+	set_source_files_properties(${ENGINE4HEROES_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+
+	add_executable(engine4heroes MACOSX_BUNDLE ${ENGINE4HEROES_ICON} ${ENGINE4HEROES_SOURCES} ${TRANSLATION_DATA})
+
+	target_compile_definitions(
+		engine4heroes
+		PRIVATE
+		$<$<CONFIG:Debug>:WITH_DEBUG>
+		$<$<BOOL:${MACOS_APP_BUNDLE}>:MACOS_APP_BUNDLE>
+		)
+
+	target_link_libraries(engine4heroes "-framework CoreFoundation")
+
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME ${CMAKE_PROJECT_NAME})
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_BUNDLE_VERSION ${CMAKE_PROJECT_VERSION})
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_EXECUTABLE_NAME engine4heroes)
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER org.engine4heroes.${CMAKE_PROJECT_NAME})
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_ICON_FILE engine4heroes.icns)
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/../resources/Info.plist.in)
+	set_target_properties(engine4heroes PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING ${CMAKE_PROJECT_VERSION})
+else(MACOS_APP_BUNDLE)
+	cmake_path(
+		ABSOLUTE_PATH ENGINE4HEROES_DATA
+		BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+		NORMALIZE
+		OUTPUT_VARIABLE ENGINE4HEROES_DATA_ABSOLUTE
+		)
+
+	add_executable(
+		engine4heroes
+		${ENGINE4HEROES_SOURCES}
+		${CMAKE_CURRENT_SOURCE_DIR}/../resources/engine4heroes.manifest
+		${CMAKE_CURRENT_SOURCE_DIR}/../resources/engine4heroes.rc
+		)
+
+	target_compile_definitions(
+		engine4heroes
+		PRIVATE
+		# MSVC: suppress deprecation warnings
+		$<$<OR:$<COMPILE_LANG_AND_ID:C,MSVC>,$<COMPILE_LANG_AND_ID:CXX,MSVC>>:_CRT_SECURE_NO_WARNINGS>
+		$<$<CONFIG:Debug>:WITH_DEBUG>
+		ENGINE4HEROES_DATA=${ENGINE4HEROES_DATA_ABSOLUTE}
+		)
+
+	# Copy executable to root of the project.
+	add_custom_command(
+		TARGET engine4heroes POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy
+		$<TARGET_FILE:engine4heroes>
+		${PROJECT_SOURCE_DIR}/$<TARGET_FILE_NAME:engine4heroes>
+		)
+
+	install(TARGETS engine4heroes DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif(MACOS_APP_BUNDLE)
+
+target_include_directories(
+	engine4heroes
+	PRIVATE
+	audio
+	game
+	gui
+	system
+	)
+
+target_link_libraries(
+	engine4heroes
+	engine
+	${USE_SDL_VERSION}::${USE_SDL_VERSION}main
+	)
