@@ -46,6 +46,9 @@
 
 namespace
 {
+    std::map<int32_t, std::vector<uint8_t>> soundCache;
+    std::map<int32_t, std::vector<uint8_t>> musicCache;
+
     struct ChannelAudioLoopEffectInfo : public AudioManager::AudioLoopEffectInfo
     {
         ChannelAudioLoopEffectInfo( const AudioLoopEffectInfo & info, const int chan )
@@ -65,9 +68,24 @@ namespace
 
     std::map<int, std::vector<uint8_t>> wavDataCache;
 
-    const std::vector<uint8_t> & GetWAV( const int soundType )
+    const std::vector<uint8_t> & getSound( const int soundType )
     {
-        return GameResource::getAudioStream( Sound::getSoundString( soundType ) );
+        std::vector<uint8_t> & sound = soundCache[soundType];
+        if ( sound.empty() ) {
+            sound = GameResource::getAudioStream( Sound::getSoundString( soundType ) );
+        }
+
+        return sound;
+    }
+
+    const std::vector<uint8_t> & getMusic( const int trackId )
+    {
+        std::vector<uint8_t> & music = musicCache[trackId];
+        if ( music.empty() ) {
+            music = GameResource::getAudioStream( Music::getMusicTrackString( trackId ) );
+        }
+
+        return music;
     }
 
     // Returns the ID of the channel occupied by the sound being played, or a negative value (-1) in case of failure.
@@ -317,7 +335,7 @@ namespace
 
         DEBUG_LOG( DBG_GAME, DBG_TRACE, "Try to play sound " << Sound::getSoundString( soundType ) )
 
-        const std::vector<uint8_t> & v = GetWAV( soundType );
+        const std::vector<uint8_t> & v = getSound( soundType );
         if ( v.empty() ) {
             return -1;
         }
@@ -345,17 +363,10 @@ namespace
             return;
         }
 
-        const std::string filePath = Music::getMusicTrackString( trackId );
+        Music::Play( trackId, getMusic( trackId ), playbackMode );
 
-        if ( filePath.empty() ) {
-            DEBUG_LOG( DBG_GAME, DBG_WARN, "Cannot find a file for " << trackId << " track." )
-        }
-        else {
-            Music::Play( trackId, GameResource::getAudioStream( filePath ), playbackMode );
-
-            currentMusicTrackId = trackId;
-            return;
-        }
+        currentMusicTrackId = trackId;
+        return;
     }
 
     std::pair<size_t, size_t> findPairOfClosestSoundEffects( const std::vector<AudioManager::AudioLoopEffectInfo> & effectsToAdd,
@@ -520,7 +531,7 @@ namespace
 
             for ( const AudioManager::AudioLoopEffectInfo & effectInfo : effects ) {
                 // This is a new sound effect. Register and play it.
-                const std::vector<uint8_t> & audioData = GetWAV( soundType );
+                const std::vector<uint8_t> & audioData = getSound( soundType );
                 if ( audioData.empty() ) {
                     // Looks like nothing to play. Ignore it.
                     continue;

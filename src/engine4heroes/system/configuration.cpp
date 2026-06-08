@@ -28,6 +28,7 @@
 #include <sstream>
 
 #include "logging.h"
+#include "render_processor.h"
 #include "screen.h"
 #include "serialize.h"
 #include "system.h"
@@ -36,6 +37,21 @@
 
 #define STRINGIFY( DEF ) #DEF
 #define EXPANDDEF( DEF ) STRINGIFY( DEF )
+
+namespace
+{
+    const std::string optionResolution{ "resolution" };
+    const std::string optionFullscreen{ "fullscreen" };
+    const std::string optionDebug{ "debug" };
+    const std::string optionLanguage{ "lang" };
+    const std::string optionSystemInfo{ "system info" };
+    const std::string option3DAudio{ "3d audio" };
+    const std::string optionMusicVolume{ "music volume" };
+    const std::string optionSoundVolume{ "sound volume" };
+    const std::string optionTextSupportMode{ "text support mode" };
+    const std::string optionCursorSoftwareRendering{ "cursor soft rendering" };
+    const std::string optionScreenScalingType{ "screen scaling type" };
+}
 
 Configuration & Configuration::instance()
 {
@@ -160,9 +176,19 @@ bool Configuration::load( const std::string_view fileName )
 {
     TinyConfig config( '=', '#' );
 
-    // TODO: load stuff.
+    if ( !config.Load( std::string( fileName ) ) ) {
+        return false;
+    }
 
-    return config.Load( std::string( fileName ) );
+    if ( config.Exists( optionFullscreen ) ) {
+        setFullScreen( config.IntParams( optionFullscreen ) );
+    }
+
+    if ( config.Exists( optionSystemInfo ) ) {
+        setSystemInfo( config.StrParams( optionSystemInfo ) == "on" );
+    }
+
+    return true;
 }
 
 void Configuration::setFullScreen( const bool enable )
@@ -184,7 +210,12 @@ void Configuration::setTextSupportMode( const bool enable )
 void Configuration::setSystemInfo( const bool enable )
 {
     _isSystemInfoEnabled = enable;
-    // TODO: do something.
+    if ( _isSystemInfoEnabled ) {
+        engine4heroes::RenderProcessor::instance().enableRenderers();
+    }
+    else {
+        engine4heroes::RenderProcessor::instance().disableRenderers();
+    }
 }
 
 void Configuration::setSoftwareCursor( const bool enable )
@@ -212,37 +243,37 @@ std::string Configuration::generateConfigFile() const
     const engine4heroes::Display & display = engine4heroes::Display::instance();
 
     os << std::endl << "# Resolution: in-game width x height : on-screen width x height" << std::endl;
-    os << "resolution = " << display.width() << "x" << display.height() << ":" << display.screenSize().width << "x" << display.screenSize().height << std::endl;
+    os << optionResolution << " = " << display.width() << "x" << display.height() << ":" << display.screenSize().width << "x" << display.screenSize().height << std::endl;
 
     os << std::endl << "# Sound volume: 0 - 10" << std::endl;
-    os << "sound volume = " << _soundVolume << std::endl;
+    os << optionSoundVolume << " = " << _soundVolume << std::endl;
 
     os << std::endl << "# Music volume: 0 - 10" << std::endl;
-    os << "music volume = " << _musicVolume << std::endl;
+    os << optionMusicVolume << " = " << _musicVolume << std::endl;
 
     os << std::endl << "# Toggle fullscreen mode: on/off" << std::endl;
-    os << "fullscreen = " << ( _isFullScreen ? "on" : "off" ) << std::endl;
+    os << optionFullscreen << " = " << ( _isFullScreen ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Print debug messages (only for development, see src/engine/logging.h for possible values)" << std::endl;
-    os << "debug = " << Logging::getDebugLevel() << std::endl;
+    os << optionDebug << " = " << Logging::getDebugLevel() << std::endl;
 
     os << std::endl << "# Game language (an empty value means English)" << std::endl;
-    os << "lang = " << _gameLanguage << std::endl;
+    os << optionLanguage << " = " << _gameLanguage << std::endl;
 
     os << std::endl << "# Enable text support mode that outputs extra information in console window: on/off" << std::endl;
-    os << "text support mode = " << ( _isTextSupportModeEnabled ? "on" : "off" ) << std::endl;
+    os << optionTextSupportMode << " = " << ( _isTextSupportModeEnabled ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Enable 3D audio for objects on Adventure Map: on/off" << std::endl;
-    os << "3d audio = " << ( _is3DAudioEnabled ? "on" : "off" ) << std::endl;
+    os << option3DAudio << " = " << ( _is3DAudioEnabled ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Display system information: on/off" << std::endl;
-    os << "system info = " << ( _isTextSupportModeEnabled ? "on" : "off" ) << std::endl;
+    os << optionSystemInfo << " = " << ( _isTextSupportModeEnabled ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Enable cursor software rendering: on/off" << std::endl;
-    os << "cursor soft rendering = " << ( _isSoftwareCursorEnabled ? "on" : "off" ) << std::endl;
+    os << optionCursorSoftwareRendering << " = " << ( _isSoftwareCursorEnabled ? "on" : "off" ) << std::endl;
 
     os << std::endl << "# Screen scaling type: nearest or linear" << std::endl;
-    os << "screen scaling type = " << ( _isScreenScalingNearest ? "nearest" : "linear" ) << std::endl;
+    os << optionScreenScalingType << " = " << ( _isScreenScalingNearest ? "nearest" : "linear" ) << std::endl;
 
     return os.str();
 }

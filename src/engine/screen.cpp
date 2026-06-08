@@ -1159,12 +1159,10 @@ namespace engine4heroes
 
     void Display::_renderFrame( const Rect & roi ) const
     {
-        if ( _preprocessing ) {
-            if ( _preprocessing() ) {
-                // Pre-processing step is applied to the whole image so we forcefully render the full frame.
-                _engine->render( *this, { 0, 0, width(), height() } );
-                return;
-            }
+        if ( _preprocessing && _preprocessing() ) {
+            // Pre-processing step is applied to the whole image so we forcefully render the full frame.
+            _engine->render( *this, { 0, 0, width(), height() } );
+            return;
         }
 
         // Make sure that we update the previously rendered area to avoid any ghost effect artefacts.

@@ -93,7 +93,7 @@ namespace
         const std::string confFile = Configuration::getLastFoundFile( "", configurationFileName );
 
         auto & conf = Configuration::instance();
-        if ( !System::IsFile( confFile ) || !conf.load() ) {
+        if ( !System::IsFile( confFile ) || !conf.load( confFile ) ) {
             conf.save();
 
             // Fullscreen mode can be enabled by default for some devices, we need to forcibly
@@ -133,8 +133,6 @@ namespace
 
             renderProcessor.registerRenderers( [sysInfoRenderer = _systemInfoRenderer.get()]() { sysInfoRenderer->preRender(); },
                                                [sysInfoRenderer = _systemInfoRenderer.get()]() { sysInfoRenderer->postRender(); } );
-
-            renderProcessor.enableRenderers();
 
             // Update mouse cursor when switching between software emulation and OS mouse modes.
             engine4heroes::cursor().registerUpdater( Cursor::Refresh );

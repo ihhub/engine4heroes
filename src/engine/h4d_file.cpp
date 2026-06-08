@@ -239,7 +239,7 @@ namespace
         const int32_t offsetY = static_cast<int32_t>( stream.getLE32() );
         image.setPosition( offsetX, offsetY );
 
-        auto [data, realSize] = stream.getRawView( width * height );
+        auto [data, realSize] = stream.getRawView( static_cast<size_t>( width ) * height );
         if ( realSize != size ) {
             return false;
         }

@@ -52,8 +52,7 @@ void Cursor::SetThemes( const int theme, const bool force )
         return;
     }
 
-    if ( _theme < CUSTOM || _theme >= COUNT ) {
-        assert( 0 );
+    if ( theme <= CUSTOM || theme >= COUNT ) {
         return;
     }
 
