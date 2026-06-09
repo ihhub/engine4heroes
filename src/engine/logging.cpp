@@ -114,7 +114,7 @@ namespace Logging
             return "<TIMESTAMP ERROR>";
         }
 
-        return std::string( buf.data() );
+        return { buf.data() };
     }
 
     void InitLog()
