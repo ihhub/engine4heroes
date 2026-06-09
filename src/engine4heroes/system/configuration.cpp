@@ -230,11 +230,11 @@ bool Configuration::load( const std::string_view fileName )
 
 void Configuration::setFullScreen( const bool enable )
 {
-    _isFullScreen = !_isFullScreen;
-
     if ( enable != engine4heroes::engine().isFullScreen() ) {
         engine4heroes::engine().toggleFullScreen();
         engine4heroes::Display::instance().render();
+
+        _isFullScreen = !_isFullScreen;
     }
 }
 
