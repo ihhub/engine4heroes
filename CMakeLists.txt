@@ -79,6 +79,7 @@ if(MACOS_APP_BUNDLE)
 		run_dylibbundler
 		ALL
 		COMMAND dylibbundler -od -b -x ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}.app/Contents/MacOS/${PROJECT_NAME} -d ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}.app/Contents/libs
+		DEPENDS engine4heroes
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		)
 endif(MACOS_APP_BUNDLE)
