@@ -91,7 +91,7 @@ namespace GameResource
                 return emptyImage;
             }
 
-            return ( *imageIter->second.get() )[imageIndex];
+            return ( *imageIter->second )[imageIndex];
         }
 
         const auto iter = heroes4.getFileEntries().find( imagePath );
@@ -117,7 +117,7 @@ namespace GameResource
             return emptyImage;
         }
 
-        if ( imageIndex >= newDataIter->second.get()->size() ) {
+        if ( imageIndex >= newDataIter->second->size() ) {
             return emptyImage;
         }
 
@@ -128,7 +128,7 @@ namespace GameResource
     {
         const auto audioIter = audioCache.find( audioPath );
         if ( audioIter != audioCache.end() ) {
-            return *( audioIter->second.get() );
+            return *( audioIter->second );
         }
 
         std::vector<uint8_t> data;
@@ -157,6 +157,6 @@ namespace GameResource
         const auto [newDataIter, isSuccess] = audioCache.emplace( audioPath, std::make_unique<std::vector<uint8_t>>( File::getAudioStream( audioPath, unpacked ) ) );
         assert( isSuccess );
 
-        return *( newDataIter->second.get() );
+        return *( newDataIter->second );
     }
 }
