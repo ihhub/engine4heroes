@@ -24,6 +24,7 @@
 #include <functional>
 #include <list>
 #include <map>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -37,6 +38,8 @@
 
 namespace
 {
+    // std::map is a not a 'stable' container which preserves objects while resizing unlike std::array.
+    // Therefore, all the entries in the below variables are unique pointers
     std::map<std::string, std::unique_ptr<std::vector<engine4heroes::Sprite>>> imageCache;
     std::map<std::string, std::unique_ptr<std::vector<uint8_t>>> audioCache;
 
