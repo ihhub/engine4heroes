@@ -24,6 +24,7 @@
 #include <string>
 
 #include "image.h"
+#include "resource_id.h"
 #include "resource_manager.h"
 #include "screen.h"
 
@@ -34,15 +35,15 @@ namespace engine4heroes
         Display & display = Display::instance();
 
         if ( display.width() == 800 && display.height() == 600 ) {
-            const auto & mainMenu = GameResource::getImage( "bitmap_raw.menu.main.0800.h4d", 0 );
+            const auto & mainMenu = GameResource::getImage( ImageId::BITMAP_RAW_MENU_MAIN_0800, 0 );
             engine4heroes::Copy( mainMenu, display );
         }
         else if ( display.width() == 1024 && display.height() == 768 ) {
-            const auto & mainMenu = GameResource::getImage( "bitmap_raw.menu.main.1024.h4d", 0 );
+            const auto & mainMenu = GameResource::getImage( ImageId::BITMAP_RAW_MENU_MAIN_1024, 0 );
             engine4heroes::Copy( mainMenu, display );
         }
         else if ( display.width() == 1280 && display.height() == 1024 ) {
-            const auto & mainMenu = GameResource::getImage( "bitmap_raw.menu.main.1280.h4d", 0 );
+            const auto & mainMenu = GameResource::getImage( ImageId::BITMAP_RAW_MENU_MAIN_1280, 0 );
             engine4heroes::Copy( mainMenu, display );
         }
         else {

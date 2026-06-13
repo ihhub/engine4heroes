@@ -39,9 +39,8 @@
 #include "audio.h"
 #include "configuration.h"
 #include "logging.h"
-#include "music_info.h"
+#include "resource_id.h"
 #include "resource_manager.h"
-#include "sound_info.h"
 #include "thread.h"
 
 namespace
@@ -72,7 +71,7 @@ namespace
     {
         std::vector<uint8_t> & sound = soundCache[soundType];
         if ( sound.empty() ) {
-            sound = GameResource::getAudioStream( Sound::getSoundString( soundType ) );
+            sound = GameResource::getAudioStream( soundType );
         }
 
         return sound;
@@ -82,7 +81,7 @@ namespace
     {
         std::vector<uint8_t> & music = musicCache[trackId];
         if ( music.empty() ) {
-            music = GameResource::getAudioStream( Music::getMusicTrackString( trackId ) );
+            music = GameResource::getAudioStream( trackId );
         }
 
         return music;
@@ -222,7 +221,7 @@ namespace
                 // Do nothing.
             }
 
-            int soundType{ Sound::UNKNOWN };
+            int soundType{ AudioId::NONE };
         };
 
         struct LoopSoundTask
@@ -320,9 +319,9 @@ namespace
     bool is3DAudioLoopEffectsEnabled{ false };
 
     // The music track last requested to be played
-    int lastRequestedMusicTrackId{ Music::UNKNOWN };
+    int lastRequestedMusicTrackId{ AudioId::NONE };
     // The music track that is currently being played
-    int currentMusicTrackId{ Music::UNKNOWN };
+    int currentMusicTrackId{ AudioId::NONE };
 
     // engine4heroes::AGGFile g_midiHeroes2AGG;
     // engine4heroes::AGGFile g_midiHeroes2xAGG;
@@ -333,7 +332,7 @@ namespace
     {
         const std::scoped_lock<std::recursive_mutex> lock( g_asyncSoundManager.resourceMutex() );
 
-        DEBUG_LOG( DBG_GAME, DBG_TRACE, "Try to play sound " << Sound::getSoundString( soundType ) )
+        DEBUG_LOG( DBG_GAME, DBG_TRACE, "Try to play sound " << GameResource::getAudioString( soundType ) )
 
         const std::vector<uint8_t> & v = getSound( soundType );
         if ( v.empty() ) {
@@ -346,7 +345,7 @@ namespace
     void PlayMusicImpl( const int trackId, const Music::PlaybackMode playbackMode )
     {
         // Make sure that the music track is valid.
-        assert( trackId > Music::UNKNOWN && trackId < Music::COUNT );
+        assert( trackId > AudioId::NONE && trackId < AudioId::COUNT );
 
         const std::scoped_lock<std::recursive_mutex> lock( g_asyncSoundManager.resourceMutex() );
 
@@ -547,7 +546,7 @@ namespace
 
                 currentAudioLoopEffects[soundType].emplace_back( effectInfo, channelId );
 
-                DEBUG_LOG( DBG_GAME, DBG_TRACE, "Playing sound " << Sound::getSoundString( soundType ) )
+                DEBUG_LOG( DBG_GAME, DBG_TRACE, "Playing sound " << GameResource::getAudioString( soundType ) )
             }
         }
     }
@@ -599,7 +598,7 @@ namespace AudioManager
 
     int PlaySound( const int soundType )
     {
-        if ( soundType == Sound::UNKNOWN ) {
+        if ( soundType == AudioId::NONE ) {
             return -1;
         }
 
@@ -614,7 +613,7 @@ namespace AudioManager
 
     void PlaySoundAsync( const int soundType )
     {
-        if ( soundType == Sound::UNKNOWN ) {
+        if ( soundType == AudioId::NONE ) {
             return;
         }
 
@@ -633,7 +632,7 @@ namespace AudioManager
 
         lastRequestedMusicTrackId = trackId;
 
-        if ( trackId == Music::UNKNOWN ) {
+        if ( trackId == AudioId::NONE ) {
             return;
         }
 
@@ -650,7 +649,7 @@ namespace AudioManager
 
         lastRequestedMusicTrackId = trackId;
 
-        if ( trackId == Music::UNKNOWN ) {
+        if ( trackId == AudioId::NONE ) {
             return;
         }
 
@@ -667,11 +666,11 @@ namespace AudioManager
 
         const std::scoped_lock<std::recursive_mutex> lock( g_asyncSoundManager.resourceMutex() );
 
-        if ( currentMusicTrackId == Music::UNKNOWN ) {
+        if ( currentMusicTrackId == AudioId::NONE ) {
             return;
         }
 
-        const int trackId = std::exchange( currentMusicTrackId, Music::UNKNOWN );
+        const int trackId = std::exchange( currentMusicTrackId, AudioId::NONE );
 
         PlayMusicImpl( trackId, Music::PlaybackMode::RESUME_AND_PLAY_INFINITE );
     }
@@ -706,7 +705,7 @@ namespace AudioManager
         Music::Stop();
         Mixer::Stop();
 
-        lastRequestedMusicTrackId = Music::UNKNOWN;
-        currentMusicTrackId = Music::UNKNOWN;
+        lastRequestedMusicTrackId = AudioId::NONE;
+        currentMusicTrackId = AudioId::NONE;
     }
 }

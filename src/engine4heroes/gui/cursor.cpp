@@ -32,11 +32,12 @@
 
 #include "image.h"
 #include "localevent.h"
+#include "resource_id.h"
 #include "resource_manager.h"
 
 namespace
 {
-    constexpr std::array<std::string_view, Cursor::COUNT> cursorResource{ { "", "animation.sample_cursor.h4d" } };
+    constexpr std::array<int32_t, Cursor::COUNT> cursorResource{ { ImageId::NONE, ImageId::ANIMATION_SAMPLE_CURSOR } };
 }
 
 Cursor & Cursor::Get()
@@ -57,7 +58,7 @@ void Cursor::SetThemes( const int theme, const bool force )
 
     _theme = theme;
 
-    const auto & image = GameResource::getImage( std::string( cursorResource[theme] ), 0 );
+    const auto & image = GameResource::getImage( cursorResource[theme], 0 );
 
     SetOffset( theme, { ( image.width() - image.x() ) / 2, ( image.height() - image.y() ) / 2 } );
 

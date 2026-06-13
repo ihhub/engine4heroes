@@ -30,10 +30,9 @@
 #include "image.h"
 #include "localevent.h"
 #include "math_base.h"
-#include "music_info.h"
+#include "resource_id.h"
 #include "resource_manager.h"
 #include "screen.h"
-#include "sound_info.h"
 #include "ui_base.h"
 #include "ui_button.h"
 #include "ui_text.h"
@@ -80,17 +79,17 @@ namespace
         return { image.x(), image.y(), image.width(), image.height() };
     }
 
-    std::string getGameResourceId()
+    int32_t getGameResourceId()
     {
         auto & display = engine4heroes::Display::instance();
         if ( display.width() == 800 && display.height() == 600 ) {
-            return "layers.menu.main.0800.h4d";
+            return ImageId::LAYERS_MENU_MAIN_0800;
         }
         if ( display.width() == 1024 && display.height() == 768 ) {
-            return "layers.menu.main.1024.h4d";
+            return ImageId::LAYERS_MENU_MAIN_1024;
         }
         if ( display.width() == 1280 && display.height() == 1024 ) {
-            return "layers.menu.main.1280.h4d";
+            return ImageId::LAYERS_MENU_MAIN_1280;
         }
 
         // Do something about it!
@@ -110,7 +109,7 @@ namespace Game
         engine4heroes::Image background;
         engine4heroes::Copy( display, background );
 
-        const std::string resourceId{ getGameResourceId() };
+        const int32_t resourceId{ getGameResourceId() };
 
         engine4heroes::Button newGameButton{ resourceId, 13, 12 };
         engine4heroes::Button loadGameButton{ resourceId, 5, 4 };
@@ -144,7 +143,7 @@ namespace Game
 
         display.render();
 
-        AudioManager::PlayMusicAsync( Music::MAIN_MENU, Music::PlaybackMode::REWIND_AND_PLAY_INFINITE );
+        AudioManager::PlayMusicAsync( AudioId::MAIN_MENU, Music::PlaybackMode::REWIND_AND_PLAY_INFINITE );
 
         auto & eventHandler = LocalEvent::Get();
         while ( eventHandler.HandleEvents( true, true ) ) {
@@ -155,19 +154,19 @@ namespace Game
             quitButton.drawOnState( eventHandler.isMouseLeftButtonPressedAndHeldInArea( quitButton.area() ) );
 
             if ( eventHandler.MouseClickLeft( newGameButton.area() ) ) {
-                AudioManager::PlaySound( Sound::BUTTON_CLICK );
+                AudioManager::PlaySound( AudioId::MISCELLANEOUS_BUTTON );
             }
             else if ( eventHandler.MouseClickLeft( loadGameButton.area() ) ) {
-                AudioManager::PlaySound( Sound::BUTTON_CLICK );
+                AudioManager::PlaySound( AudioId::MISCELLANEOUS_BUTTON );
             }
             else if ( eventHandler.MouseClickLeft( optionsButton.area() ) ) {
-                AudioManager::PlaySound( Sound::BUTTON_CLICK );
+                AudioManager::PlaySound( AudioId::MISCELLANEOUS_BUTTON );
             }
             else if ( eventHandler.MouseClickLeft( multiplayerButton.area() ) ) {
-                AudioManager::PlaySound( Sound::BUTTON_CLICK );
+                AudioManager::PlaySound( AudioId::MISCELLANEOUS_BUTTON );
             }
             else if ( eventHandler.MouseClickLeft( quitButton.area() ) ) {
-                AudioManager::PlaySound( Sound::BUTTON_CLICK );
+                AudioManager::PlaySound( AudioId::MISCELLANEOUS_BUTTON );
             }
         }
     }

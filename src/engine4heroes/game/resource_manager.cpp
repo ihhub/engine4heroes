@@ -40,8 +40,8 @@ namespace
 {
     // std::map is a not a 'stable' container which preserves objects while resizing unlike std::array.
     // Therefore, all the entries in the below variables are unique pointers
-    std::map<std::string, std::unique_ptr<std::vector<engine4heroes::Sprite>>> imageCache;
-    std::map<std::string, std::unique_ptr<std::vector<uint8_t>>> audioCache;
+    std::array<std::vector<engine4heroes::Sprite>, ImageId::COUNT> imageCache;
+    std::array<std::vector<uint8_t>, AudioId::COUNT> audioCache;
 
     const engine4heroes::Sprite emptyImage;
     const std::vector<uint8_t> emptyAudioTrack;
@@ -86,80 +86,76 @@ namespace GameResource
         return musicData.open( musicFilename );
     }
 
-    const engine4heroes::Sprite & getImage( const std::string & imagePath, const uint32_t imageIndex )
+    const engine4heroes::Sprite & getImage( const int32_t id, const uint32_t imageIndex )
     {
-        const auto imageIter = imageCache.find( imagePath );
-        if ( imageIter != imageCache.end() ) {
-            if ( imageIndex >= imageIter->second->size() ) {
+        if ( id < 0 || static_cast<size_t>( id ) >= imageCache.size() ) {
+            return emptyImage;
+        }
+
+        if ( imageCache[id].empty() ) {
+            const std::string name = getImageString( id );
+
+            const auto iter = heroes4.getFileEntries().find( name );
+            if ( iter == heroes4.getFileEntries().end() ) {
                 return emptyImage;
             }
 
-            return ( *imageIter->second )[imageIndex];
+            const auto data = heroes4.getFileEntryData( name );
+            if ( data.empty() ) {
+                return emptyImage;
+            }
+
+            const auto unpacked = Compression::unzipGzip( data );
+            if ( unpacked.empty() ) {
+                assert( 0 );
+                return emptyImage;
+            }
+
+            imageCache[id] = File::getImages( getImageString( id ), unpacked );
         }
 
-        const auto iter = heroes4.getFileEntries().find( imagePath );
-        if ( iter == heroes4.getFileEntries().end() ) {
+        if ( imageIndex >= imageCache[id].size() ) {
             return emptyImage;
         }
 
-        const auto data = heroes4.getFileEntryData( imagePath );
-        if ( data.empty() ) {
-            return emptyImage;
-        }
-
-        const auto unpacked = Compression::unzipGzip( data );
-        if ( unpacked.empty() ) {
-            assert( 0 );
-            return emptyImage;
-        }
-
-        std::vector<engine4heroes::Sprite> images = File::getImages( imagePath, unpacked );
-        const auto [newDataIter, isSuccess] = imageCache.try_emplace( imagePath, std::make_unique<std::vector<engine4heroes::Sprite>>( std::move( images ) ) );
-        if ( !isSuccess ) {
-            assert( 0 );
-            return emptyImage;
-        }
-
-        if ( imageIndex >= newDataIter->second->size() ) {
-            return emptyImage;
-        }
-
-        return ( *newDataIter->second )[imageIndex];
+        return imageCache[id][imageIndex];
     }
 
-    const std::vector<uint8_t> & getAudioStream( const std::string & audioPath )
+    const std::vector<uint8_t> & getAudioStream( const int32_t id )
     {
-        const auto audioIter = audioCache.find( audioPath );
-        if ( audioIter != audioCache.end() ) {
-            return *( audioIter->second );
+        if ( id < 0 || static_cast<size_t>( id ) >= audioCache.size() ) {
+            return emptyAudioTrack;
         }
 
-        std::vector<uint8_t> data;
+        if ( audioCache[id].empty() ) {
+            const std::string name = getAudioString( id );
 
-        auto iter = heroes4.getFileEntries().find( audioPath );
-        if ( iter != heroes4.getFileEntries().end() ) {
-            data = heroes4.getFileEntryData( audioPath );
-        }
-        else {
-            iter = musicData.getFileEntries().find( audioPath );
-            if ( iter != musicData.getFileEntries().end() ) {
-                data = musicData.getFileEntryData( audioPath );
+            std::vector<uint8_t> data;
+
+            auto iter = heroes4.getFileEntries().find( name );
+            if ( iter != heroes4.getFileEntries().end() ) {
+                data = heroes4.getFileEntryData( name );
             }
+            else {
+                iter = musicData.getFileEntries().find( name );
+                if ( iter != musicData.getFileEntries().end() ) {
+                    data = musicData.getFileEntryData( name );
+                }
+            }
+
+            if ( data.empty() ) {
+                return emptyAudioTrack;
+            }
+
+            const auto unpacked = Compression::unzipGzip( data );
+            if ( unpacked.empty() ) {
+                assert( 0 );
+                return emptyAudioTrack;
+            }
+
+            audioCache[id] = File::getAudioStream( name, unpacked );
         }
 
-        if ( data.empty() ) {
-            return emptyAudioTrack;
-        }
-
-        const auto unpacked = Compression::unzipGzip( data );
-        if ( unpacked.empty() ) {
-            assert( 0 );
-            return emptyAudioTrack;
-        }
-
-        const auto [newDataIter, isSuccess] = audioCache.emplace( audioPath, std::make_unique<std::vector<uint8_t>>( File::getAudioStream( audioPath, unpacked ) ) );
-        assert( isSuccess );
-
-        return *( newDataIter->second );
+        return audioCache[id];
     }
 }

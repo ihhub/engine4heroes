@@ -105,8 +105,8 @@ namespace engine4heroes
         return *_disabledSprite;
     }
 
-    Button::Button( std::string resourceName, const uint32_t releasedIndex, const uint32_t pressedIndex )
-        : _resourceName( std::move( resourceName ) )
+    Button::Button( const int32_t resourceId, const uint32_t releasedIndex, const uint32_t pressedIndex )
+        : _resourceId( resourceId )
         , _releasedIndex( releasedIndex )
         , _pressedIndex( pressedIndex )
     {
@@ -119,12 +119,12 @@ namespace engine4heroes
 
     const Sprite & Button::_getPressed() const
     {
-        return GameResource::getImage( _resourceName, _pressedIndex );
+        return GameResource::getImage( _resourceId, _pressedIndex );
     }
 
     const Sprite & Button::_getReleased() const
     {
-        return GameResource::getImage( _resourceName, _releasedIndex );
+        return GameResource::getImage( _resourceId, _releasedIndex );
     }
 
     const Sprite & ButtonSprite::_getPressed() const

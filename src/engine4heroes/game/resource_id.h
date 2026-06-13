@@ -21,19 +21,59 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
 
-namespace Music
+// This file exists by 2 reasons:
+// - minimize the memory footprint in the code to avoid using const char * copies
+// - using std::string to access data requires to avoid std::map or some other containers which don't guarantee the lifetime of objects
+//
+// TODO: find a better way of accessing game resources.
+
+namespace ImageId
 {
-    enum MusicTrack : int32_t
+    enum : int32_t
     {
-        UNKNOWN,
-        MAIN_MENU,
+        NONE,
+        LAYERS_MENU_MAIN_0800,
+        LAYERS_MENU_MAIN_1024,
+        LAYERS_MENU_MAIN_1280,
+        BITMAP_RAW_MENU_MAIN_0800,
+        BITMAP_RAW_MENU_MAIN_1024,
+        BITMAP_RAW_MENU_MAIN_1280,
+        ANIMATION_SAMPLE_CURSOR,
+
+        FONT_PROSE_ANTIQUE_10,
+        FONT_PROSE_ANTIQUE_12,
+        FONT_PROSE_ANTIQUE_14,
+        FONT_PROSE_ANTIQUE_16,
+        FONT_PROSE_ANTIQUE_18,
+        FONT_PROSE_ANTIQUE_20,
+        FONT_PROSE_ANTIQUE_22,
+        FONT_PROSE_ANTIQUE_24,
+        FONT_PROSE_ANTIQUE_26,
 
         // WARNING!!!
-        // Put all new entries above this line.
+        // Put all entries above this line.
         COUNT
     };
+};
 
-    std::string getMusicTrackString( const int32_t track );
+namespace AudioId
+{
+    enum : int32_t
+    {
+        NONE,
+        MAIN_MENU,
+        MISCELLANEOUS_BUTTON,
+
+        // WARNING!!!
+        // Put all entries above this line.
+        COUNT
+    };
+};
+
+namespace GameResource
+{
+    const char * getImageString( const int32_t id );
+
+    const char * getAudioString( const int32_t id );
 }

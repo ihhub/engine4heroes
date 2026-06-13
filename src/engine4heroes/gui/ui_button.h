@@ -222,7 +222,7 @@ namespace engine4heroes
             // Do nothing.
         }
 
-        Button( std::string resourceName, const uint32_t releasedIndex, const uint32_t pressedIndex );
+        Button( const int32_t resourceId, const uint32_t releasedIndex, const uint32_t pressedIndex );
 
         ~Button() override = default;
 
@@ -231,7 +231,7 @@ namespace engine4heroes
         const Sprite & _getReleased() const override;
 
     private:
-        std::string _resourceName;
+        int32_t _resourceId{ 0 };
         uint32_t _releasedIndex{ 0 };
         uint32_t _pressedIndex{ 0 };
     };
