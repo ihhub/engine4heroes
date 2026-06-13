@@ -21,6 +21,7 @@
 #include "game_mainmenu.h"
 
 #include <cassert>
+#include <cstdint>
 #include <string>
 #include <utility>
 

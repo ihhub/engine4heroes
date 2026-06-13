@@ -21,10 +21,7 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
 #include <vector>
-
-#include "resource_id.h"
 
 namespace engine4heroes
 {

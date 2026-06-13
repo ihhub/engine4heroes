@@ -20,12 +20,13 @@
 
 #include "resource_manager.h"
 
+#include <array>
 #include <cassert>
+#include <cstddef>
 #include <functional>
 #include <list>
 #include <map>
-#include <memory>
-#include <utility>
+#include <string>
 #include <vector>
 
 #include "configuration.h"
@@ -33,6 +34,7 @@
 #include "h4d_file.h"
 #include "h4r_file.h"
 #include "image.h"
+#include "resource_id.h"
 #include "tools.h"
 #include "zzlib.h"
 

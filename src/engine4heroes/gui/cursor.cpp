@@ -27,8 +27,6 @@
 #include "cursor.h"
 
 #include <array>
-#include <string>
-#include <string_view>
 
 #include "image.h"
 #include "localevent.h"
