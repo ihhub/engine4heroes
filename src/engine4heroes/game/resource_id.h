@@ -55,7 +55,7 @@ namespace ImageId
         // Put all entries above this line.
         COUNT
     };
-};
+}
 
 namespace AudioId
 {
@@ -69,7 +69,7 @@ namespace AudioId
         // Put all entries above this line.
         COUNT
     };
-};
+}
 
 namespace GameResource
 {
