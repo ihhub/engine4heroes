@@ -1,0 +1,57 @@
+/***************************************************************************
+ *   engine4heroes: https://github.com/ihhub/engine4heroes                 *
+ *   Copyright (C) 2026                                                    *
+ *                                                                         *
+ *   fheroes2: https://github.com/ihhub/fheroes2                           *
+ *   Copyright (C) 2019 - 2025                                             *
+ *                                                                         *
+ *   Free Heroes2 Engine: http://sourceforge.net/projects/fheroes2         *
+ *   Copyright (C) 2010 by Andrey Afletdinov <fheroes2@gmail.com>          *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#pragma once
+
+#include <functional>
+#include <map>
+#include <string>
+
+#include "math_base.h"
+#include "screen.h"
+
+class TinyConfig : private std::map<std::string, std::string, std::less<>>
+{
+public:
+    TinyConfig( const char sep, const char com );
+
+    bool Load( const std::string & cfile );
+
+    bool Exists( const std::string & key ) const;
+
+    int IntParams( const std::string & key ) const;
+    std::string StrParams( const std::string & key ) const;
+    // Tries to find and return a Point-type struct stored as a string "[ x, y ]" for a given key.
+    // In case of any error, the fallback value is returned.
+    engine4heroes::Point PointParams( const std::string & key, const engine4heroes::Point & fallbackValue ) const;
+    // Tries to find and return a ResolutionInfo-type struct (multiple formats are supported, see the implementation for details)
+    // for a given key. In case of any error, the fallback value is returned.
+    engine4heroes::ResolutionInfo ResolutionParams( const std::string & key, const engine4heroes::ResolutionInfo & fallbackValue ) const;
+
+private:
+    const char separator;
+    const char comment;
+};

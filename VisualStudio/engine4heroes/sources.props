@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\engine\audio.cpp" />
+    <ClCompile Include="src\engine\core.cpp" />
+    <ClCompile Include="src\engine\dir.cpp" />
+    <ClCompile Include="src\engine\h4d_file.cpp" />
+    <ClCompile Include="src\engine\h4d_image.cpp" />
+    <ClCompile Include="src\engine\h4r_file.cpp" />
+    <ClCompile Include="src\engine\image.cpp" />
+    <ClCompile Include="src\engine\image_tool.cpp" />
+    <ClCompile Include="src\engine\localevent.cpp" />
+    <ClCompile Include="src\engine\logging.cpp" />
+    <ClCompile Include="src\engine\math_tools.cpp" />
+    <ClCompile Include="src\engine\render_processor.cpp" />
+    <ClCompile Include="src\engine\screen.cpp" />
+    <ClCompile Include="src\engine\serialize.cpp" />
+    <ClCompile Include="src\engine\system.cpp" />
+    <ClCompile Include="src\engine\thread.cpp" />
+    <ClCompile Include="src\engine\timing.cpp" />
+    <ClCompile Include="src\engine\tinyconfig.cpp" />
+    <ClCompile Include="src\engine\tools.cpp" />
+    <ClCompile Include="src\engine\translations.cpp" />
+    <ClCompile Include="src\engine\zzlib.cpp" />
+    <ClCompile Include="src\engine4heroes\audio\audio_manager.cpp" />
+    <ClCompile Include="src\engine4heroes\game\engine4heroes.cpp" />
+    <ClCompile Include="src\engine4heroes\game\game_hotkeys.cpp" />
+    <ClCompile Include="src\engine4heroes\game\game_mainmenu.cpp" />
+    <ClCompile Include="src\engine4heroes\game\game_mainmenu_ui.cpp" />
+    <ClCompile Include="src\engine4heroes\game\game_string.cpp" />
+    <ClCompile Include="src\engine4heroes\game\resource_id.cpp" />
+    <ClCompile Include="src\engine4heroes\game\resource_manager.cpp" />
+    <ClCompile Include="src\engine4heroes\gui\cursor.cpp" />
+    <ClCompile Include="src\engine4heroes\system\configuration.cpp" />
+    <ClCompile Include="src\engine4heroes\gui\ui_base.cpp" />
+    <ClCompile Include="src\engine4heroes\gui\ui_button.cpp" />
+    <ClCompile Include="src\engine4heroes\gui\ui_language.cpp" />
+    <ClCompile Include="src\engine4heroes\gui\ui_tool.cpp" />
+    <ClCompile Include="src\engine4heroes\gui\ui_text.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\engine\audio.h" />
+    <ClInclude Include="src\engine\core.h" />
+    <ClInclude Include="src\engine\dir.h" />
+    <ClInclude Include="src\engine\exception.h" />
+    <ClInclude Include="src\engine\h4d_file.h" />
+    <ClInclude Include="src\engine\h4d_image.h" />
+    <ClInclude Include="src\engine\h4r_file.h" />
+    <ClInclude Include="src\engine\image.h" />
+    <ClInclude Include="src\engine\image_tool.h" />
+    <ClInclude Include="src\engine\localevent.h" />
+    <ClInclude Include="src\engine\logging.h" />
+    <ClInclude Include="src\engine\math_base.h" />
+    <ClInclude Include="src\engine\math_tools.h" />
+    <ClInclude Include="src\engine\render_processor.h" />
+    <ClInclude Include="src\engine\screen.h" />
+    <ClInclude Include="src\engine\serialize.h" />
+    <ClInclude Include="src\engine\system.h" />
+    <ClInclude Include="src\engine\thread.h" />
+    <ClInclude Include="src\engine\timing.h" />
+    <ClInclude Include="src\engine\tinyconfig.h" />
+    <ClInclude Include="src\engine\tools.h" />
+    <ClInclude Include="src\engine\translations.h" />
+    <ClInclude Include="src\engine\zzlib.h" />
+    <ClInclude Include="src\engine4heroes\audio\audio_manager.h" />
+    <ClInclude Include="src\engine4heroes\game\game_hotkeys.h" />
+    <ClInclude Include="src\engine4heroes\game\game_language.h" />
+    <ClInclude Include="src\engine4heroes\game\game_mainmenu.h" />
+    <ClInclude Include="src\engine4heroes\game\game_mainmenu_ui.h" />
+    <ClInclude Include="src\engine4heroes\game\game_string.h" />
+    <ClInclude Include="src\engine4heroes\game\resource_id.h" />
+    <ClInclude Include="src\engine4heroes\game\resource_manager.h" />
+    <ClInclude Include="src\engine4heroes\gui\cursor.h" />
+    <ClInclude Include="src\engine4heroes\gui\ui_base.h" />
+    <ClInclude Include="src\engine4heroes\gui\ui_button.h" />
+    <ClInclude Include="src\engine4heroes\gui\ui_language.h" />
+    <ClInclude Include="src\engine4heroes\gui\ui_text.h" />
+    <ClInclude Include="src\engine4heroes\gui\ui_tool.h" />
+    <ClInclude Include="src\engine4heroes\system\configuration.h" />
+    <ClInclude Include="src\engine4heroes\system\version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="src\resources\engine4heroes.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\resources\engine4heroes.rc" />
+  </ItemGroup>
+</Project>
