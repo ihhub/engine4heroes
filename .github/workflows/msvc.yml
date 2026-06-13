@@ -15,6 +15,7 @@ jobs:
           platform: x86
           build_config: Release-SDL2
           deploy_config: SDL2
+          zip_package_name: engine4heroes_windows_x86_SDL2.zip
           tools_package_name: engine4heroes_tools_windows_x86_SDL2.zip
           release_name: Windows x86 build with SDL2 (latest commit)
           release_tag: engine4heroes-windows-x86-SDL2
@@ -22,6 +23,7 @@ jobs:
           platform: x64
           build_config: Release-SDL2
           deploy_config: SDL2
+          zip_package_name: engine4heroes_windows_x64_SDL2.zip
           tools_package_name: engine4heroes_tools_windows_x64_SDL2.zip
           release_name: Windows x64 build with SDL2 (latest commit)
           release_tag: engine4heroes-windows-x64-SDL2
@@ -58,6 +60,9 @@ jobs:
       run: |
         echo "ENGINE4HEROES_APP_VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
     - uses: microsoft/setup-msbuild@v3
+    - name: Build
+      run: |
+        MSBuild.exe engine4heroes-vs2019.vcxproj /property:Platform=${{ matrix.platform }} /property:Configuration=${{ matrix.build_config }}
     - name: Build tools
       run: |
         cd src/tools
@@ -65,6 +70,12 @@ jobs:
         MSBuild.exe h4d-unpack-vs2019.vcxproj /property:Platform=${{ matrix.platform }} /property:Configuration=${{ matrix.build_config }}
     - name: Create ZIP packages
       run: |
+        7z.exe a -bb1 -tzip -- "$BUILD_DIR"\\${{ matrix.zip_package_name }} \
+                               .\\"$BUILD_DIR"\\engine4heroes.exe \
+                               .\\"$BUILD_DIR"\\*.dll \
+                               LICENSE \
+                               changelog.txt \
+                               .\\docs\\README.txt
         7z.exe a -bb1 -tzip -- "$BUILD_DIR"\\${{ matrix.tools_package_name }} \
                                .\\"$BUILD_DIR"\\extractor.exe \
                                .\\"$BUILD_DIR"\\h4d-unpack.exe \
@@ -82,6 +93,13 @@ jobs:
     - uses: actions/upload-artifact@v7
       if: ${{ github.event_name == 'pull_request' }}
       with:
+        name: ${{ matrix.zip_package_name }}
+        path: build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.zip_package_name }}
+        archive: false
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v7
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
         name: ${{ matrix.tools_package_name }}
         path: build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.tools_package_name }}
         archive: false
@@ -89,7 +107,8 @@ jobs:
     - uses: ncipollo/release-action@v1
       if: ${{ github.event_name == 'push' }}
       with:
-        artifacts: build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.tools_package_name }}
+        artifacts: build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.zip_package_name }},
+                   build/${{ matrix.platform }}/${{ matrix.build_config }}/${{ matrix.tools_package_name }}
         body: ${{ github.event.head_commit.message }}
         token: ${{ secrets.GITHUB_TOKEN }}
         name: ${{ matrix.release_name }}
