@@ -25,5 +25,5 @@ Or you can install the game using the installer, in this case, this package will
 installed automatically.
 
 --- License ---
-This project is under GNU General Public License v2.0. Refer to file LICENSE for more
+This project is under GNU General Public License v3.0. Refer to file LICENSE for more
 details.
