@@ -53,7 +53,7 @@ ifdef ENGINE4HEROES_MACOS_APP_BUNDLE
 	    -e "s/\$${MACOSX_BUNDLE_SHORT_VERSION_STRING}/$(PROJECT_VERSION)/" src/resources/Info.plist.in > engine4heroes.app/Contents/Info.plist
 	dylibbundler -od -b -x engine4heroes.app/Contents/MacOS/engine4heroes -d engine4heroes.app/Contents/libs
 else
-	cp src/dist/fheroes2/engine4heroes .
+	cp src/dist/engine4heroes/engine4heroes .
 endif
 
 clean:

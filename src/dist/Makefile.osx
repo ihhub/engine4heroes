@@ -27,7 +27,7 @@ ifndef CXX
 CXX := g++
 endif
 
-ifdef FHEROES2_MACOS_APP_BUNDLE
+ifdef ENGINE4HEROES_MACOS_APP_BUNDLE
 CCFLAGS := $(CCFLAGS) -DMACOS_APP_BUNDLE
 LDFLAGS := $(LDFLAGS) -framework CoreFoundation
 endif
