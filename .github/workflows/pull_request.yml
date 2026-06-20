@@ -88,3 +88,8 @@ jobs:
     needs:
     - msvc
     uses: ./.github/workflows/cmake.yml
+  make:
+    name: Make
+    needs:
+    - msvc
+    uses: ./.github/workflows/make.yml
