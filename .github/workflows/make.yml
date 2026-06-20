@@ -210,7 +210,7 @@ jobs:
         make -C files/lang -j "$(nproc)"
     - name: Create package
       run: |
-        7z a -bb1 -tzip -- engine4heroes_switch.zip LICENSE changelog.txt engine4heroes.nro ./docs/README.txt ./docs/README_switch.md files/data/*.h2d files/lang/*.mo maps/*.fh2m
+        7z a -bb1 -tzip -- engine4heroes_switch.zip LICENSE changelog.txt engine4heroes.nro ./docs/README.txt ./docs/README_switch.md
     - uses: actions/upload-artifact@v7
       if: ${{ github.event_name == 'pull_request' }}
       with:
