@@ -28,20 +28,8 @@
 
 #include <memory>
 
-// Managing compiler warnings for zlib headers
-#if defined( __GNUC__ )
-#pragma GCC diagnostic push
-
-#pragma GCC diagnostic ignored "-Wold-style-cast"
-#endif
-
 #include <zconf.h>
 #include <zlib.h>
-
-// Managing compiler warnings for zlib headers
-#if defined( __GNUC__ )
-#pragma GCC diagnostic pop
-#endif
 
 std::vector<uint8_t> Compression::unzipData( const uint8_t * src, const size_t srcSize, size_t realSize /* = 0 */ )
 {
@@ -141,7 +129,7 @@ std::vector<uint8_t> Compression::unzipGzip( const std::vector<uint8_t> & gzipSt
     zStream.avail_in = static_cast<uInt>( gzipStream.size() );
 
     // 15 + 16 means "windowBits = 15" with gzip decoding enabled (16)
-    if ( inflateInit2( &zStream, 15 + 16 ) != Z_OK ) {
+    if ( inflateInit2_( &zStream, 15 + 16, ZLIB_VERSION, static_cast<int>(sizeof(z_stream)) ) != Z_OK ) {
         return {};
     }
 
