@@ -39,7 +39,6 @@ PROJECT_VERSION := $(file < version.txt)
 
 all:
 	$(MAKE) -C src/dist
-	$(MAKE) -C files/lang
 ifdef ENGINE4HEROES_MACOS_APP_BUNDLE
 	mkdir -p engine4heroes.app/Contents/MacOS
 	mkdir -p engine4heroes.app/Contents/Resources/translations
@@ -58,5 +57,4 @@ endif
 
 clean:
 	$(MAKE) -C src/dist clean
-	$(MAKE) -C files/lang clean
 	-rm -rf engine4heroes engine4heroes.app
