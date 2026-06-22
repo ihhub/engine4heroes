@@ -28,7 +28,6 @@
 
 #include <memory>
 
-
 // Managing compiler warnings for zlib headers
 #if defined( __GNUC__ )
 #pragma GCC diagnostic push
