@@ -28,7 +28,6 @@
 
 #include <memory>
 
-#include <zconf.h>
 
 // Managing compiler warnings for zlib headers
 #if defined( __GNUC__ )
@@ -37,6 +36,7 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #endif
 
+#include <zconf.h>
 #include <zlib.h>
 
 // Managing compiler warnings for zlib headers
