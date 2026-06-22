@@ -204,9 +204,6 @@ jobs:
       env:
         ENGINE4HEROES_STRICT_COMPILATION: ON
         DEVKITPRO: /opt/devkitpro
-    - name: Generate translations
-      run: |
-        make -C files/lang -j "$(nproc)"
     - name: Create package
       run: |
         7z a -bb1 -tzip -- engine4heroes_switch.zip LICENSE changelog.txt engine4heroes.nro ./docs/README.txt ./docs/README_switch.md
