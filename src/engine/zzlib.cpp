@@ -29,7 +29,20 @@
 #include <memory>
 
 #include <zconf.h>
+
+// Managing compiler warnings for zlib headers
+#if defined( __GNUC__ )
+#pragma GCC diagnostic push
+
+#pragma GCC diagnostic ignored "-Werror=old-style-cast"
+#endif
+
 #include <zlib.h>
+
+// Managing compiler warnings for zlib headers
+#if defined( __GNUC__ )
+#pragma GCC diagnostic pop
+#endif
 
 std::vector<uint8_t> Compression::unzipData( const uint8_t * src, const size_t srcSize, size_t realSize /* = 0 */ )
 {
