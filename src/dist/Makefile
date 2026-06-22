@@ -31,6 +31,8 @@ TARGET := engine4heroes
 # Common build options for engine4heroes and third-party libraries
 #
 
+# TODO: avoid using project name in flags
+
 # Common flags for both C and C++ compilers
 CCFLAGS := -fsigned-char -pthread
 # Flags for the C compiler
