@@ -25,7 +25,6 @@ jobs:
             changelog.txt
             engine4heroes
             ./docs/README.txt
-            files/data/*.h2d
             script/linux/install_sdl2.sh
           tools_package_name: engine4heroes_tools_ubuntu_x86-64_SDL2.zip
           tools_package_files: >-
