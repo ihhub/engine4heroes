@@ -1,0 +1,46 @@
+###########################################################################
+#   engine4heroes: https://github.com/ihhub/engine4heroes                 #
+#   Copyright (C) 2026                                                    #
+#                                                                         #
+#   fheroes2: https://github.com/ihhub/fheroes2                           #
+#   Copyright (C) 2021 - 2025                                             #
+#                                                                         #
+#   This program is free software; you can redistribute it and/or modify  #
+#   it under the terms of the GNU General Public License as published by  #
+#   the Free Software Foundation; either version 2 of the License, or     #
+#   (at your option) any later version.                                   #
+#                                                                         #
+#   This program is distributed in the hope that it will be useful,       #
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+#   GNU General Public License for more details.                          #
+#                                                                         #
+#   You should have received a copy of the GNU General Public License     #
+#   along with this program; if not, write to the                         #
+#   Free Software Foundation, Inc.,                                       #
+#   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
+###########################################################################
+
+# Options:
+#
+# ENGINE4HEROES_STRICT_COMPILATION: build in strict compilation mode (turns warnings into errors)
+# ENGINE4HEROES_WITH_DEBUG: build in debug mode
+# ENGINE4HEROES_DATA: set the built-in path to the engine4heroes data directory (e.g. /usr/share/engine4heroes)
+
+PROJECT_TITLE := engine4heroes
+PROJECT_AUTHOR := Resurrection team
+PROJECT_VERSION := $(file < version.txt)
+
+PATH := $(PATH):/opt/devkitpro/portlibs/switch/bin/:/opt/devkitpro/tools/bin/
+
+.PHONY: all clean
+
+all:
+	$(MAKE) -C src/dist PLATFORM=switch
+	cp src/dist/engine4heroes/engine4heroes engine4heroes.elf
+	nacptool --create "$(PROJECT_TITLE)" "$(PROJECT_AUTHOR)" "$(PROJECT_VERSION)" engine4heroes.nacp
+	elf2nro engine4heroes.elf engine4heroes.nro --icon=files/images/platform/switch/icon.jpg --nacp=engine4heroes.nacp
+
+clean:
+	$(MAKE) -C src/dist clean
+	-rm -f engine4heroes.elf engine4heroes.nacp engine4heroes.nro

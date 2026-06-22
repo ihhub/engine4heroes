@@ -15,6 +15,9 @@ permissions:
   pull-requests: write
 
 jobs:
+  make:
+    name: Make
+    uses: ./.github/workflows/make.yml
   msvc:
     name: MSVC
     uses: ./.github/workflows/msvc.yml

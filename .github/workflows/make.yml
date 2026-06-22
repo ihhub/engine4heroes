@@ -1,0 +1,228 @@
+name: Make
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  make:
+    strategy:
+      matrix:
+        include:
+        - name: Linux x86-64 SDL2 Release
+          on: [ 'pull_request', 'push' ]
+          os: ubuntu-22.04
+          dependencies: libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev gettext
+          env:
+            ENGINE4HEROES_STRICT_COMPILATION: ON
+            ENGINE4HEROES_WITH_TOOLS: ON
+            ENGINE4HEROES_WITH_IMAGE: ON
+          package_name: engine4heroes_ubuntu_x86-64_SDL2.zip
+          package_files: >-
+            LICENSE
+            changelog.txt
+            engine4heroes
+            ./docs/README.txt
+            script/linux/install_sdl2.sh
+          tools_package_name: engine4heroes_tools_ubuntu_x86-64_SDL2.zip
+          tools_package_files: >-
+            LICENSE
+            ./src/dist/tools/extractor
+            ./src/dist/tools/h4d-unpack
+          release_name: Ubuntu x86-64 (Linux) build with SDL2 (latest commit)
+          release_tag: engine4heroes-linux-sdl2_dev
+        - name: Linux x86-64 SDL2 Debug
+          on: [ 'pull_request' ]
+          os: ubuntu-latest
+          dependencies: libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev gettext
+          env:
+            ENGINE4HEROES_STRICT_COMPILATION: ON
+            ENGINE4HEROES_WITH_TOOLS: ON
+            ENGINE4HEROES_WITH_IMAGE: ON
+            ENGINE4HEROES_WITH_DEBUG: ON
+            ENGINE4HEROES_WITH_ASAN: ON
+        - name: Linux ARM64 SDL2 Release
+          on: [ 'pull_request', 'push' ]
+          os: ubuntu-22.04-arm
+          dependencies: libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev gettext
+          env:
+            ENGINE4HEROES_STRICT_COMPILATION: ON
+            ENGINE4HEROES_WITH_TOOLS: ON
+            ENGINE4HEROES_WITH_IMAGE: ON
+          package_name: engine4heroes_ubuntu_arm64_SDL2.zip
+          package_files: >-
+            LICENSE
+            changelog.txt
+            engine4heroes
+            ./docs/README.txt
+            script/linux/install_sdl2.sh
+          tools_package_name: engine4heroes_tools_ubuntu_arm64_SDL2.zip
+          tools_package_files: >-
+            LICENSE
+            ./src/dist/tools/extractor
+            ./src/dist/tools/h4d-unpack
+          release_name: Ubuntu ARM64 (Linux) build with SDL2 (latest commit)
+          release_tag: engine4heroes-linux-arm-sdl2_dev
+        - name: Linux ARM64 SDL2 Debug
+          on: [ 'pull_request' ]
+          os: ubuntu-24.04-arm
+          dependencies: libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev gettext
+          env:
+            ENGINE4HEROES_STRICT_COMPILATION: ON
+            ENGINE4HEROES_WITH_TOOLS: ON
+            ENGINE4HEROES_WITH_IMAGE: ON
+            ENGINE4HEROES_WITH_DEBUG: ON
+            ENGINE4HEROES_WITH_TSAN: ON
+        - name: macOS SDL2
+          on: [ 'pull_request', 'push' ]
+          os: macos-14
+          arch: x86_64
+          dependencies: sdl2 sdl2_mixer sdl2_image
+          env:
+            CFLAGS: --target=x86_64-apple-macos10.15
+            CXXFLAGS: --target=x86_64-apple-macos10.15
+            LDFLAGS: --target=x86_64-apple-macos10.15
+            ENGINE4HEROES_STRICT_COMPILATION: ON
+            ENGINE4HEROES_WITH_TOOLS: ON
+            ENGINE4HEROES_WITH_IMAGE: ON
+          package_name: engine4heroes_macos_x86-64_SDL2.zip
+          package_files: >-
+            LICENSE
+            changelog.txt
+            engine4heroes
+            ./docs/README.txt
+            script/macos/Brewfile
+          tools_package_name: engine4heroes_tools_macos_x86-64_SDL2.zip
+          tools_package_files: >-
+            LICENSE
+            ./src/dist/tools/extractor
+            ./src/dist/tools/h4d-unpack
+          release_name: macOS x86-64 build with SDL2 (latest commit)
+          release_tag: engine4heroes-osx-sdl2_dev
+        - name: macOS SDL2 App Bundle
+          on: [ 'pull_request' ]
+          os: macos-latest
+          dependencies: sdl2 sdl2_mixer dylibbundler
+          env:
+            ENGINE4HEROES_STRICT_COMPILATION: ON
+            ENGINE4HEROES_WITH_TOOLS: ON
+            ENGINE4HEROES_MACOS_APP_BUNDLE: ON
+    name: Make (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v6
+      if: ${{ contains( matrix.on, github.event_name ) }}
+    - name: Install dependencies (Linux)
+      if: ${{ contains( matrix.on, github.event_name ) && startsWith( matrix.os, 'ubuntu-' ) }}
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install ${{ matrix.dependencies }}
+    - name: Install dependencies (macOS)
+      if: ${{ contains( matrix.on, github.event_name ) && startsWith( matrix.os, 'macos-' ) }}
+      run: |
+        if [[ "${{ matrix.arch }}" == x86_64 ]]; then
+            arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            # Homebrew uses /opt/homebrew for Apple Silicon packages and /usr/local for x86_64 packages
+            export PATH=/usr/local/bin:$PATH
+        fi
+        brew install ${{ matrix.dependencies }}
+      env:
+        # Do not update outdated dependencies of installed packages
+        HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: ON
+    - name: Build (Linux)
+      if: ${{ contains( matrix.on, github.event_name ) && startsWith( matrix.os, 'ubuntu-' ) }}
+      run: |
+        make -j "$(nproc)"
+      env: ${{ matrix.env }}
+    - name: Build (MacOS)
+      if: ${{ contains( matrix.on, github.event_name ) && startsWith( matrix.os, 'macos-' ) }}
+      run: |
+        if [[ "${{ matrix.arch }}" == x86_64 ]]; then
+            # Homebrew uses /opt/homebrew for Apple Silicon packages and /usr/local for x86_64 packages
+            export PATH=/usr/local/bin:$PATH
+        fi
+        make -j "$(sysctl -n hw.logicalcpu)"
+      env: ${{ matrix.env }}
+    - name: Create packages
+      if: ${{ contains( matrix.on, github.event_name ) && matrix.package_name != '' && matrix.tools_package_name != '' }}
+      run: |
+        7z a -bb1 -tzip -- ${{ matrix.package_name }} ${{ matrix.package_files }}
+        7z a -bb1 -tzip -- ${{ matrix.tools_package_name }} ${{ matrix.tools_package_files }}
+    - uses: actions/upload-artifact@v7
+      if: ${{ contains( matrix.on, github.event_name ) && github.event_name == 'pull_request' && matrix.package_name != '' }}
+      with:
+        name: ${{ matrix.package_name }}
+        path: ${{ matrix.package_name }}
+        archive: false
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v7
+      if: ${{ contains( matrix.on, github.event_name ) && github.event_name == 'pull_request' && matrix.tools_package_name != '' }}
+      with:
+        name: ${{ matrix.tools_package_name }}
+        path: ${{ matrix.tools_package_name }}
+        archive: false
+        if-no-files-found: error
+    - uses: ncipollo/release-action@v1
+      if: ${{ contains( matrix.on, github.event_name ) && github.event_name == 'push' }}
+      with:
+        artifacts: ${{ matrix.package_name }}, ${{ matrix.tools_package_name }}
+        body: ${{ github.event.head_commit.message }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: ${{ matrix.release_name }}
+        tag: ${{ matrix.release_tag }}
+        allowUpdates: true
+        artifactErrorsFailBuild: true
+        prerelease: true
+        replacesArtifacts: true
+  make-switch:
+    name: Make (Nintendo Switch)
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64:latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v6
+    - name: Install dependencies
+      run: |
+        # TODO: remove this temporary workaround
+        sudo rm -f /etc/apt/sources.list.d/bullseye-backports.list
+        #
+        sudo apt-get -y update
+        sudo apt-get -y install gettext p7zip-full
+    - name: Build
+      run: |
+        export PATH=$DEVKITPRO/tools/bin:$DEVKITPRO/portlibs/switch/bin:$DEVKITPRO/devkitA64/bin:$PATH
+        make -f Makefile.switch -j "$(nproc)"
+      env:
+        ENGINE4HEROES_STRICT_COMPILATION: ON
+        DEVKITPRO: /opt/devkitpro
+    - name: Create package
+      run: |
+        7z a -bb1 -tzip -- engine4heroes_switch.zip LICENSE changelog.txt engine4heroes.nro ./docs/README.txt ./docs/README_switch.md
+    - uses: actions/upload-artifact@v7
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
+        name: engine4heroes_switch.zip
+        path: engine4heroes_switch.zip
+        archive: false
+        if-no-files-found: error
+    - uses: ncipollo/release-action@v1
+      if: ${{ github.event_name == 'push' }}
+      with:
+        artifacts: engine4heroes_switch.zip
+        body: ${{ github.event.head_commit.message }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: Nintendo Switch build (latest commit)
+        tag: engine4heroes-switch-sdl2_dev
+        allowUpdates: true
+        artifactErrorsFailBuild: true
+        prerelease: true
+        replacesArtifacts: true
