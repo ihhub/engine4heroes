@@ -129,7 +129,7 @@ std::vector<uint8_t> Compression::unzipGzip( const std::vector<uint8_t> & gzipSt
     zStream.avail_in = static_cast<uInt>( gzipStream.size() );
 
     // 15 + 16 means "windowBits = 15" with gzip decoding enabled (16)
-    if ( inflateInit2_( &zStream, 15 + 16, ZLIB_VERSION, static_cast<int>(sizeof(z_stream)) ) != Z_OK ) {
+    if ( inflateInit2_( &zStream, 15 + 16, ZLIB_VERSION, static_cast<int>(sizeof(z_stream) ) ) != Z_OK ) {
         return {};
     }
 
