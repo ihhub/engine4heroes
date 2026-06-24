@@ -266,7 +266,7 @@ namespace engine4heroes
             return false;
         }
 
-        const std::unique_ptr<SDL_Surface, void ( * )( SDL_Surface * )> surface( SDL_CreateRGBSurface( 0, image.width(), image.height(), 32, 0xFF, 0xFF00, 0xFF0000,
+        const std::unique_ptr<SDL_Surface, void ( * )( SDL_Surface * )> surface( SDL_CreateRGBSurface( 0, image.width(), image.height(), 32, 0xFF0000, 0xFF00, 0xFF,
                                                                                                        0xFF000000 ),
                                                                                  SDL_FreeSurface );
         if ( !surface ) {
