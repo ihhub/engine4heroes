@@ -225,6 +225,29 @@ namespace engine4heroes
 
         ~Button() override = default;
 
+        bool setReleaseIndex( const uint32_t index )
+        {
+            if ( _releasedIndex == index ) {
+                // No changes.
+                return false;
+            }
+
+            _releasedIndex = index;
+            _updateButtonAreas();
+
+            return true;
+        }
+
+        uint32_t releaseIndex() const
+        {
+            return _releasedIndex;
+        }
+
+        uint32_t pressedIndex() const
+        {
+            return _pressedIndex;
+        }
+
     protected:
         const Sprite & _getPressed() const override;
         const Sprite & _getReleased() const override;

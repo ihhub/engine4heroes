@@ -97,6 +97,23 @@ namespace
         assert( 0 );
         return {};
     }
+
+    void updateReleaseIndex( LocalEvent & eventHandler, engine4heroes::Button & button, const engine4heroes::Image & background, engine4heroes::Image & output )
+    {
+        const uint32_t index = eventHandler.isMouseCursorPosInArea( button.area() ) ? ( button.pressedIndex() - 1 ) : ( button.pressedIndex() + 1 );
+        if ( eventHandler.isMouseLeftButtonPressedAndHeldInArea( button.area() ) ) {
+            return;
+        }
+
+        const engine4heroes::Rect areaBefore{ button.area() };
+        if ( button.setReleaseIndex( index ) ) {
+            const engine4heroes::Rect areaAfter{ button.area() };
+            if ( areaBefore != areaAfter ) {
+                engine4heroes::Copy( background, areaBefore.x, areaBefore.y, output, areaBefore.x, areaBefore.y, areaBefore.width, areaBefore.height );
+                button.draw( output );
+            }
+        }
+    }
 }
 
 namespace Game
@@ -148,6 +165,12 @@ namespace Game
 
         auto & eventHandler = LocalEvent::Get();
         while ( eventHandler.HandleEvents( true, true ) ) {
+            updateReleaseIndex( eventHandler, newGameButton, background, display );
+            updateReleaseIndex( eventHandler, loadGameButton, background, display );
+            updateReleaseIndex( eventHandler, optionsButton, background, display );
+            updateReleaseIndex( eventHandler, multiplayerButton, background, display );
+            updateReleaseIndex( eventHandler, quitButton, background, display );
+
             newGameButton.drawOnState( eventHandler.isMouseLeftButtonPressedAndHeldInArea( newGameButton.area() ) );
             loadGameButton.drawOnState( eventHandler.isMouseLeftButtonPressedAndHeldInArea( loadGameButton.area() ) );
             optionsButton.drawOnState( eventHandler.isMouseLeftButtonPressedAndHeldInArea( optionsButton.area() ) );
