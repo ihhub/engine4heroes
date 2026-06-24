@@ -98,7 +98,7 @@ namespace
         return {};
     }
 
-    void updateReleaseIndex( LocalEvent & eventHandler, engine4heroes::Button & button, const engine4heroes::Image & background, engine4heroes::Image & output )
+    void updateReleaseIndex( const LocalEvent & eventHandler, engine4heroes::Button & button, const engine4heroes::Image & background, engine4heroes::Image & output )
     {
         const uint32_t index = eventHandler.isMouseCursorPosInArea( button.area() ) ? ( button.pressedIndex() - 1 ) : ( button.pressedIndex() + 1 );
         if ( eventHandler.isMouseLeftButtonPressedAndHeldInArea( button.area() ) ) {
