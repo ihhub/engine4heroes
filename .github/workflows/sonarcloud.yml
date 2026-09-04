@@ -63,7 +63,7 @@ jobs:
         args: >-
           -Dsonar.cfamily.compile-commands=build/compile_commands.json
           -Dsonar.cfamily.analysisCache.mode=fs
-          -Dsonar.cfamily.analysisCache.path=.sonar-cfamily-cache
+          -Dsonar.cfamily.analysisCache.path=~/.sonar-cfamily-cache
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
