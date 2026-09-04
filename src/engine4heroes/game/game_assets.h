@@ -28,7 +28,7 @@ namespace engine4heroes
     class Sprite;
 }
 
-namespace GameResource
+namespace Assets
 {
     // This function must be called at the very beginning to make sure that we have access to game resources.
     bool initializeResources();

@@ -28,10 +28,10 @@
 
 #include <array>
 
+#include "game_assets.h"
 #include "image.h"
 #include "localevent.h"
 #include "resource_id.h"
-#include "resource_manager.h"
 
 namespace
 {
@@ -56,7 +56,7 @@ void Cursor::SetThemes( const int theme, const bool force )
 
     _theme = theme;
 
-    const auto & image = GameResource::getImage( cursorResource[theme], 0 );
+    const auto & image = Assets::getImage( cursorResource[theme], 0 );
 
     SetOffset( theme, { ( image.width() - image.x() ) / 2, ( image.height() - image.y() ) / 2 } );
 

@@ -37,9 +37,9 @@
 
 #include "audio.h"
 #include "configuration.h"
+#include "game_assets.h"
 #include "logging.h"
 #include "resource_id.h"
-#include "resource_manager.h"
 #include "thread.h"
 
 namespace
@@ -70,7 +70,7 @@ namespace
     {
         std::vector<uint8_t> & sound = soundCache[soundType];
         if ( sound.empty() ) {
-            sound = GameResource::getAudioStream( soundType );
+            sound = Assets::getAudioStream( soundType );
         }
 
         return sound;
@@ -80,7 +80,7 @@ namespace
     {
         std::vector<uint8_t> & music = musicCache[trackId];
         if ( music.empty() ) {
-            music = GameResource::getAudioStream( trackId );
+            music = Assets::getAudioStream( trackId );
         }
 
         return music;
@@ -331,7 +331,7 @@ namespace
     {
         const std::scoped_lock<std::recursive_mutex> lock( g_asyncSoundManager.resourceMutex() );
 
-        DEBUG_LOG( DBG_GAME, DBG_TRACE, "Try to play sound " << GameResource::getAudioString( soundType ) )
+        DEBUG_LOG( DBG_GAME, DBG_TRACE, "Try to play sound " << Assets::getAudioString( soundType ) )
 
         const std::vector<uint8_t> & v = getSound( soundType );
         if ( v.empty() ) {
@@ -545,7 +545,7 @@ namespace
 
                 currentAudioLoopEffects[soundType].emplace_back( effectInfo, channelId );
 
-                DEBUG_LOG( DBG_GAME, DBG_TRACE, "Playing sound " << GameResource::getAudioString( soundType ) )
+                DEBUG_LOG( DBG_GAME, DBG_TRACE, "Playing sound " << Assets::getAudioString( soundType ) )
             }
         }
     }

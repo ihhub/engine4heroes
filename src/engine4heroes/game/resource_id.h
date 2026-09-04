@@ -71,7 +71,7 @@ namespace AudioId
     };
 }
 
-namespace GameResource
+namespace Assets
 {
     const char * getImageString( const int32_t id );
 

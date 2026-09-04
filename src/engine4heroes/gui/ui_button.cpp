@@ -27,9 +27,9 @@
 #include <cstddef>
 #include <memory>
 
+#include "game_assets.h"
 #include "image.h"
 #include "math_tools.h"
-#include "resource_manager.h"
 
 namespace engine4heroes
 {
@@ -119,12 +119,12 @@ namespace engine4heroes
 
     const Sprite & Button::_getPressed() const
     {
-        return GameResource::getImage( _resourceId, _pressedIndex );
+        return Assets::getImage( _resourceId, _pressedIndex );
     }
 
     const Sprite & Button::_getReleased() const
     {
-        return GameResource::getImage( _resourceId, _releasedIndex );
+        return Assets::getImage( _resourceId, _releasedIndex );
     }
 
     const Sprite & ButtonSprite::_getPressed() const
