@@ -64,12 +64,12 @@
 #include "core.h"
 #include "cursor.h"
 #include "exception.h"
+#include "game_assets.h"
 #include "game_hotkeys.h"
 #include "game_mainmenu.h"
 #include "localevent.h"
 #include "logging.h"
 #include "render_processor.h"
-#include "resource_manager.h"
 #include "screen.h"
 #include "system.h"
 #include "ui_tool.h"
@@ -203,7 +203,7 @@ int main( int argc, char ** argv )
 
         const DisplayInitializer displayInitializer;
 
-        if ( !GameResource::initializeResources() ) {
+        if ( !Assets::initializeResources() ) {
             return EXIT_FAILURE;
         }
 

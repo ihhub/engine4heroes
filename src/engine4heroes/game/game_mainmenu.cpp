@@ -27,12 +27,12 @@
 
 #include "audio.h"
 #include "audio_manager.h"
+#include "game_assets.h"
 #include "game_mainmenu_ui.h"
 #include "image.h"
 #include "localevent.h"
 #include "math_base.h"
 #include "resource_id.h"
-#include "resource_manager.h"
 #include "screen.h"
 #include "ui_base.h"
 #include "ui_button.h"
@@ -135,11 +135,11 @@ namespace Game
         engine4heroes::Button multiplayerButton{ resourceId, 9, 8 };
         engine4heroes::Button quitButton{ resourceId, 21, 20 };
 
-        const engine4heroes::Rect loadGameTextArea{ getImageRect( GameResource::getImage( resourceId, 6 ) ) };
-        const engine4heroes::Rect networkTextArea{ getImageRect( GameResource::getImage( resourceId, 10 ) ) };
-        const engine4heroes::Rect newGameTextArea{ getImageRect( GameResource::getImage( resourceId, 14 ) ) };
-        const engine4heroes::Rect optionsTextArea{ getImageRect( GameResource::getImage( resourceId, 18 ) ) };
-        const engine4heroes::Rect quitTextArea{ getImageRect( GameResource::getImage( resourceId, 22 ) ) };
+        const engine4heroes::Rect loadGameTextArea{ getImageRect( Assets::getImage( resourceId, 6 ) ) };
+        const engine4heroes::Rect networkTextArea{ getImageRect( Assets::getImage( resourceId, 10 ) ) };
+        const engine4heroes::Rect newGameTextArea{ getImageRect( Assets::getImage( resourceId, 14 ) ) };
+        const engine4heroes::Rect optionsTextArea{ getImageRect( Assets::getImage( resourceId, 18 ) ) };
+        const engine4heroes::Rect quitTextArea{ getImageRect( Assets::getImage( resourceId, 22 ) ) };
 
         BackgroundButtonUpdater loadGameUpdater( background, loadGameTextArea, "Load Game" );
         BackgroundButtonUpdater networkUpdater( background, networkTextArea, "Multiplayer" );

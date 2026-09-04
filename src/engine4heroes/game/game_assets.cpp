@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "resource_manager.h"
+#include "game_assets.h"
 
 #include <array>
 #include <cassert>
@@ -70,7 +70,7 @@ namespace
     }
 }
 
-namespace GameResource
+namespace Assets
 {
     bool initializeResources()
     {

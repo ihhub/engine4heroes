@@ -31,8 +31,8 @@
 #include <memory>
 #include <numeric>
 
+#include "game_assets.h"
 #include "resource_id.h"
-#include "resource_manager.h"
 #include "ui_language.h"
 
 namespace
@@ -69,11 +69,11 @@ namespace
         case engine4heroes::FontSize::SMALL:
             switch ( fontType.color ) {
             case engine4heroes::FontColor::WHITE:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_14, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_14, character );
             case engine4heroes::FontColor::GRAY:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_16, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_16, character );
             case engine4heroes::FontColor::YELLOW:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_18, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_18, character );
             default:
                 // Did you add a new font color? Add the corresponding logic for it!
                 assert( 0 );
@@ -83,15 +83,15 @@ namespace
         case engine4heroes::FontSize::NORMAL:
             switch ( fontType.color ) {
             case engine4heroes::FontColor::WHITE:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
             case engine4heroes::FontColor::GRAY:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
             case engine4heroes::FontColor::YELLOW:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
             case engine4heroes::FontColor::GOLDEN_GRADIENT:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
             case engine4heroes::FontColor::SILVER_GRADIENT:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_20, character );
             default:
                 // Did you add a new font color? Add the corresponding logic for it!
                 assert( 0 );
@@ -101,11 +101,11 @@ namespace
         case engine4heroes::FontSize::LARGE:
             switch ( fontType.color ) {
             case engine4heroes::FontColor::WHITE:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_26, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_26, character );
             case engine4heroes::FontColor::GOLDEN_GRADIENT:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_26, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_26, character );
             case engine4heroes::FontColor::SILVER_GRADIENT:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_26, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_26, character );
             default:
                 // Did you add a new font color? Add the corresponding logic for it!
                 assert( 0 );
@@ -115,9 +115,9 @@ namespace
         case engine4heroes::FontSize::BUTTON_RELEASED:
             switch ( fontType.color ) {
             case engine4heroes::FontColor::WHITE:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
             case engine4heroes::FontColor::GRAY:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
             default:
                 // Did you add a new font color? Add the corresponding logic for it!
                 assert( 0 );
@@ -127,9 +127,9 @@ namespace
         case engine4heroes::FontSize::BUTTON_PRESSED:
             switch ( fontType.color ) {
             case engine4heroes::FontColor::WHITE:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
             case engine4heroes::FontColor::GRAY:
-                return GameResource::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
+                return Assets::getImage( ImageId::FONT_PROSE_ANTIQUE_10, character );
             default:
                 // Did you add a new font color? Add the corresponding logic for it!
                 assert( 0 );
